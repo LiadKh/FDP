@@ -1,0 +1,25 @@
+{
+  "name": "fdp",
+  "version": "1.0.0",
+  "description": "FDP - View validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiadKh/FDP.git"
+  },
+  "keywords": [
+    "FDP",
+    "validation",
+    "node.js",
+    "react"
+  ],
+  "author": "Liad Khamdadash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LiadKh/FDP/issues"
+  },
+  "homepage": "https://github.com/LiadKh/FDP#readme"
+}
