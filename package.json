@@ -55,7 +55,20 @@
     "node.js",
     "react"
   ],
-  "author": "Liad Khamdadash",
+  "author": {
+    "name": "Liad Khamdadash",
+    "url": "https://github.com/LiadKh"
+  },
+  "contributors": [
+    {
+      "name": "Liad Khamdadash",
+      "url": "https://github.com/LiadKh"
+    },
+    {
+      "name": "Slava Kagan",
+      "url": "https://github.com/SlavaKagan"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LiadKh/FDP/issues"
