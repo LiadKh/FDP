@@ -1,0 +1,1 @@
+mongod --auth --dbpath C:/data/db

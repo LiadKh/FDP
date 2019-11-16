@@ -12,12 +12,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon ./server/bin/www",
     "client": "cd ./client; npm start",
-    "dev": "concurrently -c \"magenta.bold,blue.bold\" -n \"CLIENT,SERVER\" npm:client npm:server"
+    "db": "run-script-os",
+    "db:win32": "cd ./database/mongodb/scripts/windows& setup.bat",
+    "db:darwin:linux": "cd ./database/mongodb/scripts/linux; sh setup.sh",
+    "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "mongoose": "^5.7.11",
     "morgan": "~1.9.1"
   },
   "repository": {
@@ -43,6 +47,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-flowtype": "^4.4.1",
     "eslint-plugin-import": "^2.18.2",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "run-script-os": "^1.0.7"
   }
 }
