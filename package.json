@@ -10,7 +10,9 @@
   "scripts": {
     "postinstall": "cd ./client; npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon ./server/bin/www",
+    "server": "cross-env NODE_ENV=development run-script-os",
+    "server:darwin:linux": "DEBUG=fdp:* nodemon ./server/bin/www",
+    "server:win32": "set DEBUG=fdp:* & nodemon ./server/bin/www",
     "client": "cd ./client; npm start",
     "db": "run-script-os",
     "db:win32": "cd ./database/mongodb/scripts/windows& setup.bat",
@@ -23,6 +25,18 @@
     "express": "~4.16.1",
     "mongoose": "^5.7.11",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "concurrently": "^5.0.0",
+    "cross-env": "^6.0.3",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-flowtype": "^4.4.1",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.4",
+    "run-script-os": "^1.0.7"
   },
   "repository": {
     "type": "git",
@@ -39,15 +53,5 @@
   "bugs": {
     "url": "https://github.com/LiadKh/FDP/issues"
   },
-  "homepage": "https://github.com/LiadKh/FDP#readme",
-  "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "concurrently": "^5.0.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-flowtype": "^4.4.1",
-    "eslint-plugin-import": "^2.18.2",
-    "nodemon": "^1.19.4",
-    "run-script-os": "^1.0.7"
-  }
+  "homepage": "https://github.com/LiadKh/FDP#readme"
 }
