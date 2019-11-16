@@ -75,7 +75,7 @@ typings/
 /coverage
 
 # production
-/build
+client/build
 
 # misc
 .DS_Store
@@ -89,6 +89,6 @@ yarn-debug.log*
 yarn-error.log*
 
 
-# # environment variables
+# environment variables
 config/environment/*
 !config/environment/example.env

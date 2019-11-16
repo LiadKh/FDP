@@ -16,7 +16,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fs = require('fs');
 
-require('../database/mongodb/connection')
+// require('../database/mongodb/connection')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -33,7 +33,7 @@ app.use(logger('common', {
 }))
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.cwd(__dirname, '..', 'client', 'build')));
+  app.use(express.static(path.resolve(process.cwd(), 'client/build')));
 }
 
 app.use(express.json());

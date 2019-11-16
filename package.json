@@ -17,9 +17,10 @@
     "db": "run-script-os",
     "db:win32": "cd ./database/mongodb/scripts/windows& setup.bat",
     "db:darwin:linux": "cd ./database/mongodb/scripts/linux; sh setup.sh",
-    "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server",
     "flow": "flow",
-    "flow-stop": "flow stop"
+    "flow-stop": "flow stop",
+    "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server",
+    "start": "cd ./client; npm run build; cd ..; cross-env NODE_ENV=production node ./server/bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
