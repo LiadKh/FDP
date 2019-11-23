@@ -12,7 +12,8 @@ var companySchema = new Schema({
   },
   managers: [{
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: [true, "company can't be empty"],
   }],
   technicalEditor: [{
     type: Schema.Types.ObjectId,
@@ -25,3 +26,7 @@ var companySchema = new Schema({
 }, {
   timestamps: true
 });
+
+var Company = mongoose.model('Company', companySchema);
+
+module.exports = Company;
