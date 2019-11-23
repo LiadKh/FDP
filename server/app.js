@@ -1,4 +1,5 @@
 const path = require('path');
+const log = require('debug')('SERVER');
 
 if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line max-len
@@ -15,8 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
     if (result.error) {
       throw result.error;
     }
-    // eslint-disable-next-line no-console
-    console.log(result.parsed);
+    log(result.parsed);
   }
 }
 
@@ -25,13 +25,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
-
-mkdirp(path.join(process.cwd(), 'logs'), (err) => {
-  if (err) {
-    // eslint-disable-next-line no-console
-    console.err(err);
-  }
-});
 
 require('../database/mongodb/connection');
 
@@ -57,8 +50,15 @@ if (process.env.NODE_ENV === 'production') {
       ),
     }),
   );
+  // create log folder
+  mkdirp(path.join(process.cwd(), 'logs'), (err) => {
+    if (err) {
+      log(err);
+    }
+  });
 
-  const access = fs.createWriteStream('logs/logger.log');
+  // bind STDOUT to file
+  const access = fs.createWriteStream(path.join(process.cwd(), 'logs/logger.log'));
   // eslint-disable-next-line no-multi-assign
   process.stdout.write = process.stderr.write = access.write.bind(access);
 } else if (process.env.NODE_ENV === 'development') {

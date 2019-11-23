@@ -10,7 +10,7 @@
   "scripts": {
     "postinstall": "cd ./client; npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cross-env NODE_ENV=development DEBUG=fdp:* nodemon ./server/bin/www",
+    "server": "cross-env NODE_ENV=development DEBUG=* nodemon ./server/bin/www",
     "client": "cd ./client; npm start",
     "db": "run-script-os",
     "db:win32": "cd ./database/mongodb/scripts/windows& setup.bat",
