@@ -1,32 +1,43 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var companySchema = new Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: [true, "company name can't be blank"],
-    index: true,
-    trim: true,
-    minlength: 3
+const { Schema } = mongoose;
+const modelName = require('./models.names').company;
+
+const companySchema = new Schema(
+  {
+    name: {
+      type: String,
+      unique: true,
+      required: [true, "company name can't be blank"],
+      index: true,
+      trim: true,
+      minlength: 3,
+    },
+    managers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, "company can't be empty"],
+      },
+    ],
+    technicalEditor: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Project',
+      },
+    ],
   },
-  managers: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, "company can't be empty"],
-  }],
-  technicalEditor: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  projects: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Project'
-  }]
-}, {
-  timestamps: true
-});
+  {
+    timestamps: true,
+  },
+);
 
-var Company = mongoose.model('Company', companySchema);
+const Company = mongoose.model(modelName, companySchema);
 
 module.exports = Company;
