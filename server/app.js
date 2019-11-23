@@ -46,7 +46,7 @@ const allRouters = require('./routes/allRoutes');
 
 const app = express();
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
   // log all requests to access.log
   app.use(
     logger('common', {
@@ -57,13 +57,13 @@ if (process.env.NODE_ENV !== 'production') {
       ),
     }),
   );
-} else if (process.env.NODE_ENV !== 'development') {
+
+  const access = fs.createWriteStream('logs/logger.log');
+  // eslint-disable-next-line no-multi-assign
+  process.stdout.write = process.stderr.write = access.write.bind(access);
+} else if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
-
-const access = fs.createWriteStream('logs/logger.log');
-// eslint-disable-next-line no-multi-assign
-process.stdout.write = process.stderr.write = access.write.bind(access);
 
 app.use(express.json());
 app.use(
