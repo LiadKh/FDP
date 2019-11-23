@@ -22,6 +22,8 @@ router.post('/company', async function (req, res, next) {
     //TODO remove the property of isAdmin
     let companyId = transaction.insert('company', newCompany);
     let managerId = transaction.insert('user', newManager);
+    transaction.update(person, jonathanId, aliceObject);
+
     const final = await transaction.run();
     res.status(200).send('new company and manager have created successfully');
   } catch (error) {

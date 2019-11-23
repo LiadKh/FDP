@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const validator = require('validator');
+let modelName = require('./models.names').user
 
 var userSchema = new Schema({
   name: {
@@ -52,6 +53,6 @@ var userSchema = new Schema({
   timestamps: true,
 });
 
-var User = mongoose.model('User', userSchema);
+var User = mongoose.model(modelName, userSchema);
 
 module.exports = User;

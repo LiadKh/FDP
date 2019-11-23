@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+let modelName = require('./models.names').company
 
 var companySchema = new Schema({
   name: {
@@ -27,6 +28,6 @@ var companySchema = new Schema({
   timestamps: true
 });
 
-var Company = mongoose.model('Company', companySchema);
+var Company = mongoose.model(modelName, companySchema);
 
 module.exports = Company;

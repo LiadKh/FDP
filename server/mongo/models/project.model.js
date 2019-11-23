@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+let modelName = require('./models.names').project
 
 var projectSchema = new Schema({
   name: {
@@ -23,6 +24,6 @@ var projectSchema = new Schema({
   timestamps: true,
 });
 
-var Project = mongoose.model('Project', projectSchema);
+var Project = mongoose.model(modelName, projectSchema);
 
 module.exports = Project;
