@@ -27,7 +27,7 @@ const connect = mongoose.connect(process.env.MONGODB_URL, opts, (err) => {
     log('MongoDB Connection Succeeded.');
   } else {
     log(`Error in DB connection: ${err}`);
-    setTimeout(connectWithRetry, 10000);
+    setTimeout(connectWithRetry, 5000);
   }
 });
 
