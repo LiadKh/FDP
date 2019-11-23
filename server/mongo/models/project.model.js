@@ -1,29 +1,37 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-let modelName = require('./models.names').project
+const mongoose = require('mongoose');
 
-var projectSchema = new Schema({
-  name: {
-    type: String,
-    lowercase: true,
-    required: [true, "project name can't be blank"]
+const { Schema } = mongoose;
+const modelName = require('./models.names').project;
+
+const projectSchema = new Schema(
+  {
+    name: {
+      type: String,
+      lowercase: true,
+      required: [true, "project name can't be blank"],
+    },
+    technicalEditor: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    managers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    updated: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  technicalEditor: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  managers: [{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  updated: {
-    type: Date,
-    default: Date.now
-  }
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  },
+);
 
-var Project = mongoose.model(modelName, projectSchema);
+const Project = mongoose.model(modelName, projectSchema);
 
 module.exports = Project;

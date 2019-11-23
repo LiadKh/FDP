@@ -1,7 +1,8 @@
-const express = require('express')
+const express = require('express');
+
 const router = express.Router();
-const admin = require('./admin.routes')
+const admin = require('./admin.routes');
 
-router.use('/admin', admin)
+router.use('/admin', admin);
 
-module.exports = router
+module.exports = router;

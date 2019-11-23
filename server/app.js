@@ -1,40 +1,76 @@
-var path = require('path');
+const path = require('path');
 
 if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line import/no-extraneous-dependencies, global-require, node/no-unpublished-require
   const result = require('dotenv').config({
-    path: path.resolve(process.cwd(), './config/environment', `${process.env.NODE_ENV}.env`)
-  })
+    path: path.resolve(
+      process.cwd(),
+      './config/environment',
+      `${process.env.NODE_ENV}.env`,
+    ),
+  });
 
-  if (result.error) {
-    throw result.error
+  if (process.env.NODE_ENV === 'development') {
+    if (result.error) {
+      throw result.error;
+    }
+    // eslint-disable-next-line no-console
+    console.log(result.parsed);
   }
-  console.log(result.parsed)
 }
 
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var fs = require('fs');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 
-require('../database/mongodb/connection')
+mkdirp(path.join(process.cwd(), 'logs'), (err) => {
+  if (err) {
+    // eslint-disable-next-line no-console
+    console.err(err);
+  }
+});
 
-var allRouters = require('./routes/allRoutes')
+require('../database/mongodb/connection');
 
-var app = express();
+const modelsFolder = path.join(__dirname, '../server/mongo/models');
 
-app.use(logger('dev'));
+fs.readdirSync(modelsFolder).forEach((file) => {
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  require(path.join(modelsFolder, file));
+});
 
-// log all requests to access.log
-app.use(logger('common', {
-  stream: fs.createWriteStream(path.resolve(process.cwd(), 'access.log'), {
-    flags: 'a'
-  })
-}))
+const allRouters = require('./routes/allRoutes');
+
+const app = express();
+
+if (process.env.NODE_ENV !== 'production') {
+  // log all requests to access.log
+  app.use(
+    logger('common', {
+      stream: fs.createWriteStream(
+        path.resolve(process.cwd(), 'logs/access.log'), {
+          flags: 'a',
+        },
+      ),
+    }),
+  );
+} else if (process.env.NODE_ENV !== 'development') {
+  app.use(logger('dev'));
+}
+
+const access = fs.createWriteStream('logs/logger.log');
+// eslint-disable-next-line no-multi-assign
+process.stdout.write = process.stderr.write = access.write.bind(access);
 
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
-}));
+app.use(
+  express.urlencoded({
+    extended: false,
+  }),
+);
 app.use(cookieParser());
 
 app.use(allRouters);
@@ -50,7 +86,9 @@ app.use((err, req, res) => {
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(process.cwd(), 'client/build')));
 } else {
-  const routeList = require("express-routes-catalogue");
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line import/no-extraneous-dependencies,global-require,node/no-unpublished-require
+  const routeList = require('express-routes-catalogue');
   routeList.default.terminal(app);
 }
 
