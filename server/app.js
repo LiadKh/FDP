@@ -25,15 +25,34 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
+const mongoose = require('mongoose');
+const events = require('events');
+
+const dbEventEmitter = new events.EventEmitter();
+dbEventEmitter.on('connection', () => {
+  const modelsFolder = path.join(__dirname, '../server/mongo/models');
+
+  fs.readdirSync(modelsFolder).forEach((file) => {
+    // eslint-disable-next-line import/no-dynamic-require, global-require
+    require(path.join(modelsFolder, file));
+  });
+  if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line global-require
+    require('./utils/admin');
+    // eslint-disable-next-line global-require
+    require('./utils/project');
+  }
+});
+
+mongoose.connection
+  .on('error', (err) => {
+    log(err);
+  })
+  .on('connected', () => {
+    dbEventEmitter.emit('connection');
+  });
 
 require('../database/mongodb/connection');
-
-const modelsFolder = path.join(__dirname, '../server/mongo/models');
-
-fs.readdirSync(modelsFolder).forEach((file) => {
-  // eslint-disable-next-line import/no-dynamic-require, global-require
-  require(path.join(modelsFolder, file));
-});
 
 const allRouters = require('./routes/allRoutes');
 
