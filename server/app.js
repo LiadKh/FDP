@@ -1,4 +1,5 @@
 var path = require('path');
+
 if (process.env.NODE_ENV !== 'production') {
   const result = require('dotenv').config({
     path: path.resolve(process.cwd(), './config/environment', `${process.env.NODE_ENV}.env`)
@@ -7,7 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
   if (result.error) {
     throw result.error
   }
-
   console.log(result.parsed)
 }
 
@@ -18,8 +18,7 @@ var fs = require('fs');
 
 require('../database/mongodb/connection')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var allRouters = require('./routes/allRoutes')
 
 var app = express();
 
@@ -32,19 +31,13 @@ app.use(logger('common', {
   })
 }))
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.resolve(process.cwd(), 'client/build')));
-}
-
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(allRouters);
 
 app.use((err, req, res) => {
   res.locals.message = err.message;
@@ -53,5 +46,12 @@ app.use((err, req, res) => {
   res.status(err.status || 500);
   res.send('error');
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(process.cwd(), 'client/build')));
+} else {
+  const routeList = require("express-routes-catalogue");
+  routeList.default.terminal(app);
+}
 
 module.exports = app;
