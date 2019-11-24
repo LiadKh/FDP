@@ -78,8 +78,7 @@
     "name": "Liad Khamdadash",
     "url": "https://github.com/LiadKh"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Liad Khamdadash",
       "url": "https://github.com/LiadKh"
     },
@@ -88,7 +87,6 @@
       "url": "https://github.com/SlavaKagan"
     }
   ],
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/LiadKh/FDP/issues"
   },

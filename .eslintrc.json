@@ -4,7 +4,10 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "mongo": true,
+    "shared-node-browser": true,
+    "es2020": true
   },
   "extends": [
     "airbnb",
