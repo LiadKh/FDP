@@ -8,17 +8,17 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "postinstall": "cd ./client; npm i",
+    "postinstall": "cd ./client&& npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cross-env NODE_ENV=development DEBUG=* nodemon ./server/bin/www",
-    "client": "cd ./client; npm start",
+    "client": "cd ./client&& npm start",
     "db": "run-script-os",
-    "db:win32": "cd ./database/mongodb/scripts/windows& setup.bat",
-    "db:darwin:linux": "cd ./database/mongodb/scripts/linux; sh setup.sh",
+    "db:win32": "cd ./database/mongodb/scripts/windows&& setup.bat",
+    "db:darwin:linux": "cd ./database/mongodb/scripts/linux&& sh setup.sh",
     "flow": "flow",
     "flow-stop": "flow stop",
     "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server",
-    "start": "cd ./client; npm run build; cd ..; cross-env NODE_ENV=production node ./server/bin/www",
+    "start": "cd ./client&& npm run build&& cd ..&& cross-env NODE_ENV=production node ./server/bin/www",
     "lint": "eslint --ignore-path ./.gitignore .",
     "lint-fix": "eslint --ignore-path ./.gitignore --fix ."
   },
@@ -78,8 +78,7 @@
     "name": "Liad Khamdadash",
     "url": "https://github.com/LiadKh"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Liad Khamdadash",
       "url": "https://github.com/LiadKh"
     },
@@ -88,7 +87,6 @@
       "url": "https://github.com/SlavaKagan"
     }
   ],
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/LiadKh/FDP/issues"
   },
