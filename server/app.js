@@ -54,7 +54,7 @@ mongoose.connection
 
 require('../database/mongodb/connection');
 
-const allRouters = require('./routes/allRoutes');
+const allRouters = require('./routes');
 
 const app = express();
 
