@@ -1,0 +1,50 @@
+{
+  "workbench.iconTheme": "vscode-icons",
+  "[html]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "vsicons.projectDetection.autoReload": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": true,
+    "editor.renderWhitespace": "all",
+    "editor.acceptSuggestionOnEnter": "off"
+  },
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "check",
+      "iconColour": "yellow",
+      "background": "yellow",
+      "foreground": "white",
+      "type": "tag"
+    },
+    "FIXME": {
+      "icon": "alert",
+      "iconColour": "red",
+      "background": "red",
+      "foreground": "white",
+      "type": "tag"
+    }
+  },
+  "todo-tree.highlights.defaultHighlight": {
+    "icon": "diff-ignored",
+    "type": "text",
+    "foreground": "red",
+    "background": "white",
+    "iconColour": "green",
+    "opacity": 50
+  },
+  "todo-tree.tree.showCountsInTree": true,
+  "files.autoSave": "off",
+  "editor.formatOnSave": true
+}
