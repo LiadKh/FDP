@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require, node/no-unpublished-require
   const result = require('dotenv').config({
     path: path.resolve(
-      process.cwd(),
+      __dirname,
       './config/environment',
       `${process.env.NODE_ENV}.env`,
     ),
@@ -103,7 +103,11 @@ app.use((err, req, res) => {
 });
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.resolve(process.cwd(), 'client/build')));
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
 } else {
   // eslint-disable-next-line max-len
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require,node/no-unpublished-require

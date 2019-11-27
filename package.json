@@ -8,17 +8,17 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "postinstall": "cd ./client&& npm i",
+    "postinstall": "npm install --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cross-env NODE_ENV=development DEBUG=* nodemon ./server/bin/www",
-    "client": "cd ./client&& npm start",
+    "client": "npm start --prefix client",
     "db": "run-script-os",
     "db:win32": "cd ./database/mongodb/scripts/windows&& setup.bat",
     "db:darwin:linux": "cd ./database/mongodb/scripts/linux&& sh setup.sh",
     "flow": "flow",
     "flow-stop": "flow stop",
     "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server",
-    "start": "cd ./client&& npm run build&& cd ..&& cross-env NODE_ENV=production node ./server/bin/www",
+    "start": "npm run build --prefix client&& cross-env NODE_ENV=production node ./server/bin/www",
     "lint": "eslint --ignore-path ./.gitignore .",
     "lint-fix": "eslint --ignore-path ./.gitignore --fix ."
   },
