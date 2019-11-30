@@ -33,6 +33,12 @@ const create = async () => {
     const projectId = transaction.insert('Project', project);
     data.project = projectId;
 
+    transaction.update('Company', companyId, {
+      $push: {
+        projects: projectId,
+      },
+    });
+
     await transaction.run();
     log(`new company, manager and project have created successfully ${data}`);
   } catch (error) {

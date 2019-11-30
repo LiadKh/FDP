@@ -6,8 +6,8 @@ if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require, node/no-unpublished-require
   const result = require('dotenv').config({
     path: path.resolve(
-      process.cwd(),
-      './config/environment',
+      __dirname,
+      '../config/environment',
       `${process.env.NODE_ENV}.env`,
     ),
   });
@@ -27,6 +27,10 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const mongoose = require('mongoose');
 const events = require('events');
+
+const {
+  handleError,
+} = require('./lib/error');
 
 const dbEventEmitter = new events.EventEmitter();
 dbEventEmitter.on('connection', () => {
@@ -52,9 +56,10 @@ mongoose.connection
     dbEventEmitter.emit('connection');
   });
 
-require('../database/mongodb/connection');
+require('./mongo/connection');
+require('./mongo/config');
 
-const allRouters = require('./routes/allRoutes');
+const allRouters = require('./routes');
 
 const app = express();
 
@@ -94,21 +99,21 @@ app.use(cookieParser());
 
 app.use(allRouters);
 
-app.use((err, req, res) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.send('error');
-});
-
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.resolve(process.cwd(), 'client/build')));
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
 } else {
   // eslint-disable-next-line max-len
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require,node/no-unpublished-require
   const routeList = require('express-routes-catalogue');
   routeList.default.terminal(app);
 }
+
+app.use((err, req, res, next) => {
+  handleError(err, res);
+});
 
 module.exports = app;

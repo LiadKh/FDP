@@ -1,5 +1,5 @@
 const log = require('debug')('MOCK');
-const User = require('../mongo/models/user.model');
+const User = require('../mongo/models/user');
 
 const admin = {
   name: {
@@ -8,7 +8,7 @@ const admin = {
   },
   email: 'admin@admin.com',
   password: '123',
-  admin: true,
+  isAdmin: true,
 };
 
 User.create(admin).then((user) => log(`admin has been created ${user}`)).catch((err) => log(`mock admin problem ${err}`));
