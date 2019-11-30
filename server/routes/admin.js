@@ -4,9 +4,9 @@ const Transaction = require('mongoose-transactions');
 
 const router = express.Router();
 
-const Company = require('../mongo/models/company.model');
-const User = require('../mongo/models/user.model');
-const Project = require('../mongo/models/project.model');
+const Company = require('../mongo/models/company');
+const User = require('../mongo/models/user');
+const Project = require('../mongo/models/project');
 const modelsNames = require('../mongo/models/models.names');
 
 /** get all the users that exists in the system. */

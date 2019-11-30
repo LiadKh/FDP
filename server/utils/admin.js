@@ -1,5 +1,5 @@
 const log = require('debug')('MOCK');
-const User = require('../mongo/models/user.model');
+const User = require('../mongo/models/user');
 
 const admin = {
   name: {
