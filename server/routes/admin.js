@@ -1,7 +1,9 @@
 const express = require('express');
 const log = require('debug')('ADMIN');
 const Transaction = require('mongoose-transactions');
-const ErrorHandler = require('../lib/error');
+const {
+  HttpErrorHandler,
+} = require('../lib/error');
 
 const router = express.Router();
 
@@ -10,30 +12,19 @@ const User = require('../mongo/models/user');
 const Project = require('../mongo/models/project');
 const modelsNames = require('../mongo/models/models.names');
 
-/** get all the users that exists in the system. */
-router.get('/', (req, res, next) => {
-  User.find({
-    admin: true,
-  }, (err, data) => {
-    if (err) {
-      log(err);
-      res.status(500).send(err);
-    }
-    res.send(data);
-  });
-});
-
 /** create new admin. */
-router.post('/', async (req, res) => {
-  const newAdmin = req.body.admin;
-  if (!newAdmin) res.status(400).send('invalid data');
+router.post('/', async (req, res, next) => {
+  const {
+    admin,
+  } = req.body;
+  if (!admin) throw new HttpErrorHandler(400, 'invalid admin data');
 
-  newAdmin.admin = true;
-  User.create(newAdmin).then((user) => {
+  admin.isAdmin = true;
+  User.create(admin).then((user) => {
     res.status(200).send(user);
   }).catch((error) => {
     log(error);
-    res.status(500).send('there is a problem while the system has tried to create new admin');
+    next(next(new HttpErrorHandler(500, error)));
   });
 });
 
@@ -107,6 +98,19 @@ router.post('/company', async (req, res) => {
 //       }
 //       res.send(projects);
 //     });
+//   });
+// });
+
+// /** get all the admins that exists in the system. */
+// router.get('/', (req, res, next) => {
+//   User.find({
+//     admin: true,
+//   }, (err, data) => {
+//     if (err) {
+//       log(err);
+//       next(new HttpErrorHandler(500, err));
+//     }
+//     res.send(data);
 //   });
 // });
 

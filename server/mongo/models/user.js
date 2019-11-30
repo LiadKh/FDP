@@ -47,7 +47,7 @@ const userSchema = new Schema({
     required: [true, "password can't be blank"],
     minlength: 3,
   },
-  admin: {
+  isAdmin: {
     type: Boolean,
     default: false,
   },
