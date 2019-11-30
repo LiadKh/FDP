@@ -29,7 +29,7 @@ const mongoose = require('mongoose');
 const events = require('events');
 
 const {
-  handleError
+  handleError,
 } = require('./lib/error');
 
 const dbEventEmitter = new events.EventEmitter();
@@ -56,7 +56,8 @@ mongoose.connection
     dbEventEmitter.emit('connection');
   });
 
-require('../database/mongodb/connection');
+require('./mongo/connection');
+require('./mongo/config');
 
 const allRouters = require('./routes');
 

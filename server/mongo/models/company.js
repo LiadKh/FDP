@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
+const modelName = require('./models.names').company;
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const {
   Schema,
 } = mongoose;
-const modelName = require('./models.names').company;
 
 const companySchema = new Schema({
   name: {
@@ -30,6 +32,8 @@ const companySchema = new Schema({
 }, {
   timestamps: true,
 });
+
+companySchema.plugin(mongoosePaginate);
 
 const Company = mongoose.model(modelName, companySchema);
 
