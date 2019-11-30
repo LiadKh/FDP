@@ -28,6 +28,10 @@ const mkdirp = require('mkdirp');
 const mongoose = require('mongoose');
 const events = require('events');
 
+const {
+  handleError
+} = require('./lib/error');
+
 const dbEventEmitter = new events.EventEmitter();
 dbEventEmitter.on('connection', () => {
   const modelsFolder = path.join(__dirname, '../server/mongo/models');
@@ -94,14 +98,6 @@ app.use(cookieParser());
 
 app.use(allRouters);
 
-app.use((err, req, res) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.send('error');
-});
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
@@ -114,5 +110,9 @@ if (process.env.NODE_ENV === 'production') {
   const routeList = require('express-routes-catalogue');
   routeList.default.terminal(app);
 }
+
+app.use((err, req, res, next) => {
+  handleError(err, res);
+});
 
 module.exports = app;

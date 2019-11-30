@@ -1,6 +1,7 @@
 const express = require('express');
 const log = require('debug')('ADMIN');
 const Transaction = require('mongoose-transactions');
+const ErrorHandler = require('../lib/error');
 
 const router = express.Router();
 
