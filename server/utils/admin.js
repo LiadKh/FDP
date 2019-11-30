@@ -7,7 +7,7 @@ const admin = {
     last: 'admin',
   },
   email: 'admin@admin.com',
-  password: '123',
+  password: 'admin',
   isAdmin: true,
 };
 

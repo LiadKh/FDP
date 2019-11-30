@@ -5,11 +5,13 @@ const admin = require('./admin');
 const company = require('./company');
 const auth = require('./auth');
 const user = require('./user');
+const manager = require('./manager');
 
 
 router.use('/', auth);
 router.use('/admin', admin);
 router.use('/user', user);
+router.use('/manager', manager);
 router.use('/company', company);
 
 module.exports = router;

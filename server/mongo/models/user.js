@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const modelName = require('./models.names').user;
-const mongoosePaginate = require('mongoose-paginate-v2');
 
 const {
   Schema,
@@ -50,6 +50,10 @@ const userSchema = new Schema({
     minlength: 3,
   },
   isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isManager: {
     type: Boolean,
     default: false,
   },

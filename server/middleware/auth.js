@@ -26,8 +26,66 @@ const auth = async (req, res, next) => {
     next();
   } catch (error) {
     log(error);
-    next(new HttpErrorHandler(404, 'Not authorized to access this resource'));
+    next(new HttpErrorHandler(401, `Not authorized to access this resource ${error}`));
   }
 };
 
-module.exports = auth;
+const adminAuth = async (req, res, next) => {
+  try {
+    auth(req, res, next);
+    if (!req.user.isAdmin) {
+      throw new Error('Not authorized to access this resource');
+    }
+    next();
+  } catch (error) {
+    log(error);
+    next(new HttpErrorHandler(401, error.toString()));
+  }
+};
+
+const notAdminAuth = async (req, res, next) => {
+  try {
+    if (req.user.isAdmin) {
+      throw new Error(
+        'Not authorized to access this resource',
+      );
+    }
+    next();
+  } catch (error) {
+    log(error);
+    next(new HttpErrorHandler(401, error.toString()));
+  }
+};
+
+const managerAuth = async (req, res, next) => {
+  try {
+    if (!req.user.isManager) {
+      throw new Error('Not authorized to access this resource');
+    }
+    next();
+  } catch (error) {
+    log(error);
+    next(new HttpErrorHandler(401, error));
+  }
+};
+
+const technicalWriterAuth = async (req, res, next) => {
+  try {
+    if (req.user.isManager || req.user.isAdmin) {
+      throw new Error('Not authorized to access this resource');
+    }
+    next();
+  } catch (error) {
+    log(error);
+    next(new HttpErrorHandler(401, error.toString()));
+  }
+};
+
+
+module.exports = {
+  auth,
+  adminAuth,
+  notAdminAuth,
+  managerAuth,
+  technicalWriterAuth,
+};

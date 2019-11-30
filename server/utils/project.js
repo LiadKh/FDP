@@ -8,23 +8,24 @@ const create = async () => {
   try {
     const data = new Map();
 
-    const manager = {
-      name: {
-        first: 'user1',
-        last: 'user1',
-      },
-      email: 'user1@user1.com',
-      password: '123',
-    };
-    const managerId = transaction.insert('User', manager);
-    data.manager = managerId;
-
     const company = {
-      name: 'company1',
-      managers: [managerId],
+      name: 'company',
     };
     const companyId = transaction.insert('Company', company);
     data.company = companyId;
+
+    const manager = {
+      name: {
+        first: 'manager',
+        last: 'manager',
+      },
+      isManager: true,
+      company: companyId,
+      email: 'manager@manager.com',
+      password: 'manager',
+    };
+    const managerId = transaction.insert('User', manager);
+    data.manager = managerId;
 
     const project = {
       name: 'project1',
@@ -32,12 +33,6 @@ const create = async () => {
     };
     const projectId = transaction.insert('Project', project);
     data.project = projectId;
-
-    transaction.update('Company', companyId, {
-      $push: {
-        projects: projectId,
-      },
-    });
 
     await transaction.run();
     log(`new company, manager and project have created successfully ${data}`);
