@@ -1,7 +1,9 @@
 const log = require('debug')('AUTH');
 const express = require('express');
 const User = require('../mongo/models/user');
-const auth = require('../middleware/auth');
+const {
+  auth,
+} = require('../middleware/auth');
 const {
   HttpErrorHandler,
 } = require('../lib/error');
@@ -17,18 +19,20 @@ router.post('/login', async (req, res, next) => {
     } = req.body;
     if (!email || !password) {
       next(new HttpErrorHandler(400, 'missing email or password'));
+    } else {
+      const user = await User.findByCredentials(email, password);
+      if (!user) {
+        const err = 'Login failed! Check authentication credentials';
+        log(err);
+        next(new HttpErrorHandler(401, err));
+      } else {
+        const token = await user.generateAuthToken();
+        res.status(201).send({
+          user,
+          token,
+        });
+      }
     }
-    const user = await User.findByCredentials(email, password);
-    if (!user) {
-      const err = 'Login failed! Check authentication credentials';
-      log(err);
-      next(new HttpErrorHandler(401, err));
-    }
-    const token = await user.generateAuthToken();
-    res.status(201).send({
-      user,
-      token,
-    });
   } catch (error) {
     next(new HttpErrorHandler(400, error));
   }
