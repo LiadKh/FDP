@@ -115,6 +115,19 @@ userSchema.statics.findByCredentials = async (email, password) => {
   return user;
 };
 
+userSchema.statics.deleteUser = async (companyId, userId) => {
+  User.deleteOne({
+    company: companyId,
+    _id: userId,
+  }, (err) => {
+    if (err) {
+      throw new Error({
+        massage: err,
+      });
+    }
+  });
+};
+
 const User = mongoose.model(modelName, userSchema);
 
 module.exports = User;
