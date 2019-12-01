@@ -15,22 +15,25 @@ const Project = require('../mongo/models/project');
 
 router.use(auth);
 
-/** create new manager in the company. */
+/** create new user in the company. */
 router.post('/', managerAuth, (req, res, next) => {
   const {
-    manager,
+    user,
   } = req.body;
-  if (!manager) throw new HttpErrorHandler(400, 'need the manager to specify in the request');
+  if (!user) throw new HttpErrorHandler(400, 'need to specify the user in the request');
 
-  delete manager.isAdmin;
-  manager.company = req.user.company;
-  const user = new User(manager);
-  user.save((err) => {
+  delete user.isAdmin;
+  user.company = req.user.company;
+  if (typeof user.isManager === 'undefined') {
+    user.isManager = false;
+  }
+  const newUser = new User(user);
+  newUser.save((err) => {
     if (err) {
       log(err);
       next(new HttpErrorHandler(400, err));
     } else {
-      res.send('new manager has been created successfully');
+      res.send(`new ${newUser.isManager ? 'manager' : 'technical editor'} has been created successfully`);
     }
   });
 });
@@ -93,4 +96,37 @@ router.get('/users', managerAuth, async (req, res, next) => {
     }
   });
 });
+
+/** delete company user. */
+router.delete('/delete/:id', managerAuth, async (req, res, next) => {
+  const {
+    id,
+  } = req.params;
+
+  if (!id) {
+    next(new HttpErrorHandler(400, 'missing user id'));
+  }
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    if (req.user._id.toString() === id) {
+      const count = await User.count({
+        company: req.user.company,
+        isManager: true,
+      });
+      if (count === 1) {
+        const message = 'try to delete the last manager in the company';
+        log(message);
+        throw new Error(message.toString());
+      }
+    }
+    res.send();
+    // eslint-disable-next-line no-underscore-dangle
+    await User.deleteUser(req.user.company, id);
+    res.send();
+  } catch (error) {
+    log(error.message);
+    next(new HttpErrorHandler(400, error.message));
+  }
+});
+
 module.exports = router;

@@ -16,19 +16,6 @@ const companySchema = new Schema({
     trim: true,
     minlength: 3,
   },
-  // managers: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: [true, "company can't be empty"],
-  // }],
-  // technicalEditor: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  // }],
-  // projects: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Project',
-  // }],
 }, {
   timestamps: true,
 });
