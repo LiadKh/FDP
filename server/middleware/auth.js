@@ -39,7 +39,7 @@ const adminAuth = async (req, res, next) => {
     next();
   } catch (error) {
     log(error);
-    next(new HttpErrorHandler(401, error.toString()));
+    next(new HttpErrorHandler(403, error.toString()));
   }
 };
 
@@ -53,7 +53,7 @@ const notAdminAuth = async (req, res, next) => {
     next();
   } catch (error) {
     log(error);
-    next(new HttpErrorHandler(401, error.toString()));
+    next(new HttpErrorHandler(403, error.toString()));
   }
 };
 
@@ -65,7 +65,7 @@ const managerAuth = async (req, res, next) => {
     next();
   } catch (error) {
     log(error);
-    next(new HttpErrorHandler(401, error));
+    next(new HttpErrorHandler(403, error));
   }
 };
 
@@ -77,7 +77,7 @@ const technicalWriterAuth = async (req, res, next) => {
     next();
   } catch (error) {
     log(error);
-    next(new HttpErrorHandler(401, error.toString()));
+    next(new HttpErrorHandler(403, error.toString()));
   }
 };
 

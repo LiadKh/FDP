@@ -11,7 +11,7 @@ const {
 const router = express.Router();
 
 /** login */
-router.post('/login', async (req, res, next) => {
+router.patch('/login', async (req, res, next) => {
   try {
     const {
       email,
@@ -39,7 +39,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 /** logout current device */
-router.post('/logout', auth, async (req, res, next) => {
+router.patch('/logout', auth, async (req, res, next) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => token.token !== req.token);
     await req.user.save();
@@ -50,7 +50,7 @@ router.post('/logout', auth, async (req, res, next) => {
 });
 
 /** logout out of all device */
-router.post('/logoutAll', auth, async (req, res, next) => {
+router.patch('/logoutAll', auth, async (req, res, next) => {
   try {
     req.user.tokens.splice(0, req.user.tokens.length);
     await req.user.save();
