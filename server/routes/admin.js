@@ -133,4 +133,23 @@ router.get('/allAdmins', (req, res, next) => {
   });
 });
 
+/** delete a company. */
+router.delete('/company/:id', async (req, res, next) => {
+  res.send();
+  const {
+    id,
+  } = req.params;
+
+  if (!id) next(new HttpErrorHandler(400, 'missing company id'));
+  else {
+    try {
+      await Company.deleteCompany(id);
+      res.send();
+    } catch (error) {
+      log(error);
+      next(new HttpErrorHandler(400, error));
+    }
+  }
+});
+
 module.exports = router;
