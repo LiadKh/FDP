@@ -92,3 +92,7 @@ yarn-error.log*
 # environment variables
 config/environment/*
 !config/environment/example.env
+
+
+# intellij
+idea
