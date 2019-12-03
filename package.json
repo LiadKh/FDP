@@ -14,7 +14,9 @@
     "install-client:win32": "cd client && npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cross-env NODE_ENV=development DEBUG=* nodemon ./server/bin/www",
-    "client": "npm start --prefix client",
+    "client": "run-script-os",
+    "client:win32": "cd client && npm run start",
+    "client:darwin:linux": "npm start --prefix client",
     "db": "run-script-os",
     "db:win32": "cd ./database/mongodb/scripts/windows&& setup.bat",
     "db:darwin:linux": "cd ./database/mongodb/scripts/linux&& sh setup.sh",
@@ -85,8 +87,7 @@
     "name": "Liad Khamdadash",
     "url": "https://github.com/LiadKh"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Liad Khamdadash",
       "url": "https://github.com/LiadKh"
     },
