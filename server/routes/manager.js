@@ -88,6 +88,50 @@ router.post('/project/:name', managerAuth, async (req, res, next) => {
 });
 
 /** assign technical editor to project. */
+router.get('/project/:projectId/users', managerAuth, async (req, res, next) => {
+  const {
+    projectId,
+  } = req.params;
+
+  let {
+    size,
+    page,
+  } = req.query;
+
+  if (!page) {
+    page = 0;
+  }
+  if (!size) {
+    size = 5;
+  }
+  const {
+    company,
+  } = req.user;
+
+  const op = {
+    _id: projectId,
+    company,
+  };
+
+  const select = {
+    users: {
+      $slice: [page * size, size],
+    },
+    select: 'users',
+  };
+
+  Project.find(op, select)
+    .populate('users')
+    .exec((err, docs) => {
+      if (err) {
+        next(new HttpErrorHandler(400, err));
+      } else {
+        res.send(docs[0].users);
+      }
+    });
+});
+
+/** assign technical editor to project. */
 router.put('/project/:projectId/user/:userId', managerAuth, async (req, res, next) => {
   const {
     projectId,
