@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
 
 const modelName = require('./models.names').company;
 const User = require('./user');
@@ -21,8 +20,6 @@ const companySchema = new Schema({
 }, {
   timestamps: true,
 });
-
-companySchema.plugin(mongoosePaginate);
 
 companySchema.statics.deleteCompany = async (companyId) => {
   Company.deleteOne({

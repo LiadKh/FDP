@@ -42,9 +42,9 @@ dbEventEmitter.on('connection', () => {
   });
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line global-require
-    require('./utils/admin');
+    require('../mocks/admin');
     // eslint-disable-next-line global-require
-    require('./utils/project');
+    require('../mocks/project');
   }
 });
 

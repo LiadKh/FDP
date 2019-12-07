@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
 
 const modelName = require('./models.names').project;
 
@@ -20,12 +19,15 @@ const projectSchema = new Schema({
     ref: 'Company',
     required: [true, "company can't be empty"],
   },
+  users: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  }],
 }, {
   timestamps: true,
   autoIndex: true,
 });
-
-projectSchema.plugin(mongoosePaginate);
 
 const Project = mongoose.model(modelName, projectSchema);
 

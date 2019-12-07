@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
-const mongoosePaginate = require('mongoose-paginate-v2');
 
 const modelName = require('./models.names').user;
 
@@ -70,8 +69,6 @@ const userSchema = new Schema({
 }, {
   timestamps: true,
 });
-
-userSchema.plugin(mongoosePaginate);
 
 userSchema.pre('save', async function (next) {
   // Hash the password before saving the user model
