@@ -12,7 +12,7 @@ const handleError = (err, res) => {
     message,
   } = err;
 
-  message = process.env.NODE_ENV === 'development' ? err.message : {};
+  message = process.env.NODE_ENV === 'development' ? message : {};
   statusCode = err.statusCode || 500;
 
   res.status(statusCode).json({

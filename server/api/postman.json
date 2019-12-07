@@ -9,7 +9,40 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "Create new Admin",
+					"name": "Get Admins - pagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/admin?page=0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"admin"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -40,13 +73,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/admin/",
+							"raw": "{{url}}/admin",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"admin",
-								""
+								"admin"
 							]
 						},
 						"description": "create new admin"
@@ -54,7 +86,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all Companies - pagination",
+					"name": "Get Companies - pagination",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -69,14 +101,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/admin/company/",
+							"raw": "{{url}}/admin/company?name=com",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"admin",
-								"company",
-								""
+								"company"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "com"
+								}
 							]
 						},
 						"description": "get all the companies that exists in the system"
@@ -84,7 +121,7 @@
 					"response": []
 				},
 				{
-					"name": "Create company",
+					"name": "Create Company",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -119,62 +156,6 @@
 					"response": []
 				},
 				{
-					"name": "Get all Admins - pagination",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accessToken}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/admin/allAdmins",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"admin",
-								"allAdmins"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get  Company Projects - pagination",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accessToken}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/company/company",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"company",
-								"company"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete Company",
 					"request": {
 						"auth": {
@@ -198,6 +179,34 @@
 								"admin",
 								"company",
 								"5de3f015f97e185b708aff6e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  Company's Projects - pagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/company/company",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"company",
+								"company"
 							]
 						}
 					},
@@ -226,13 +235,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/company/",
+							"raw": "{{url}}/company/projects?name=project",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"company",
-								""
+								"projects"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "project"
+								}
 							]
 						}
 					},
@@ -274,7 +289,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"admin@admin.com\",\n\t\"password\":\"admin\"\n}",
+							"raw": "{\n\t\"email\":\"manager@manager.com\",\n\t\"password\":\"manager\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -426,105 +441,7 @@
 			"name": "Manager",
 			"item": [
 				{
-					"name": "Create a Project",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accessToken}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"manager\": {\n        \"name\": {\n            \"first\": \"mnager2\",\n            \"last\": \"manager2\"\n        },\n        \"isManager\": true,\n        \"email\": \"manager2@manager.com\",\n        \"password\": \"manager\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/manager/project/project12",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"manager",
-								"project",
-								"project12"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all Technical Editor - pagination",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accessToken}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/manager/users?isManager=false",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"manager",
-								"users"
-							],
-							"query": [
-								{
-									"key": "isManager",
-									"value": "false"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all  users in company - pagination Copy",
+					"name": "Get Company's Uers - pagination",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -539,20 +456,26 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/manager/users",
+							"raw": "{{url}}/manager/users?manager=false",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"manager",
 								"users"
+							],
+							"query": [
+								{
+									"key": "manager",
+									"value": "false"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create new User in company",
+					"name": "Create User",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -575,7 +498,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n        \"name\": {\n            \"first\": \"manager\",\n            \"last\": \"manager\"\n        },\n        \"isManager\": true,\n        \"email\": \"manager12@manager.com\",\n        \"password\": \"manager\"\n    }\n}",
+							"raw": "{\n    \"user\": {\n        \"name\": {\n            \"first\": \"manager\",\n            \"last\": \"manager\"\n        },\n        \"isManager\": true,\n        \"email\": \"manager112@manager.com\",\n        \"password\": \"manager\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -590,6 +513,143 @@
 							"path": [
 								"manager",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/manager/project/project12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"manager",
+								"project",
+								"project12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project's Uers - pagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/manager/project/5deba38aeb0bc42fd53f67ec/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"manager",
+								"project",
+								"5deba38aeb0bc42fd53f67ec",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/manager/project/5deba38aeb0bc42fd53f67ec/user/5debae61a80b3647319520cc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"manager",
+								"project",
+								"5deba38aeb0bc42fd53f67ec",
+								"user",
+								"5debae61a80b3647319520cc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User from Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/manager/project/5deba38aeb0bc42fd53f67ec/user/5deba38aeb0bc42fd53f67eb",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"manager",
+								"project",
+								"5deba38aeb0bc42fd53f67ec",
+								"user",
+								"5deba38aeb0bc42fd53f67eb"
 							]
 						}
 					},
@@ -611,14 +671,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/manager/delete/5de3f023f97e185b708aff75",
+							"raw": "{{url}}/manager/delete/5debae61a80b3647319520cc",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"manager",
 								"delete",
-								"5de3f023f97e185b708aff75"
+								"5debae61a80b3647319520cc"
 							]
 						}
 					},

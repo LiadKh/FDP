@@ -19,46 +19,78 @@ const modelsNames = require('../mongo/models/models.names');
 router.use(auth);
 router.use(adminAuth);
 
+/** get all the admins that exists in the system. */
+router.get('/', async (req, res, next) => {
+  let {
+    page,
+    size,
+  } = req.query;
+
+  if (!page) {
+    page = 0;
+  }
+  if (!size) {
+    size = 5;
+  }
+
+  User.find({
+    isAdmin: true,
+  }).skip(page * size).limit(size).exec((err, docs) => {
+    if (err) {
+      log(err);
+      next(new HttpErrorHandler(500, err));
+    } else {
+      res.send(docs);
+    }
+  });
+});
+
 /** create new admin. */
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const {
     admin,
   } = req.body;
-  if (!admin) throw new HttpErrorHandler(400, 'invalid admin data');
+  if (!admin) next(new HttpErrorHandler(400, 'invalid admin data'));
   else {
     admin.isAdmin = true;
     User.create(admin).then((user) => {
       res.status(200).send(user);
     }).catch((error) => {
       log(error);
-      next(next(new HttpErrorHandler(500, error)));
+      next(new HttpErrorHandler(500, error));
     });
   }
 });
 
 /** get companies - pagination -> page and size. */
-router.get('/company', (req, res, next) => {
+router.get('/company', async (req, res, next) => {
   let {
     page,
     size,
-  } = req.params;
+    name,
+  } = req.query;
 
   if (!page) {
-    page = 1;
+    page = 0;
   }
   if (!size) {
     size = 5;
   }
 
-  Company.paginate({}, {
-    page,
-    limit: size,
-  }, (err, result) => {
+  if (!name) {
+    name = '';
+  }
+
+  Company.find({
+    name: {
+      $regex: name,
+    },
+  }).skip(page * size).limit(size).exec((err, docs) => {
     if (err) {
       log(err);
       next(new HttpErrorHandler(500, err));
     } else {
-      res.send(result.docs);
+      res.send(docs);
     }
   });
 });
@@ -102,35 +134,6 @@ router.post('/company', async (req, res, next) => {
       next(new HttpErrorHandler(500, error));
     }
   }
-});
-
-/** get all the admins that exists in the system. */
-router.get('/allAdmins', (req, res, next) => {
-  let {
-    page,
-    size,
-  } = req.params;
-
-  if (!page) {
-    page = 1;
-  }
-  if (!size) {
-    size = 5;
-  }
-
-  User.paginate({
-    isAdmin: true,
-  }, {
-    page,
-    limit: size,
-  }, (err, result) => {
-    if (err) {
-      log(err);
-      next(new HttpErrorHandler(500, err));
-    } else {
-      res.send(result.docs);
-    }
-  });
 });
 
 /** delete a company. */
