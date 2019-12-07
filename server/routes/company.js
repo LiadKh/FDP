@@ -20,7 +20,8 @@ router.get('/projects', notAdminAuth, (req, res, next) => {
   let {
     page,
     size,
-  } = req.params;
+    name,
+  } = req.query;
 
   if (!page) {
     page = 0;
@@ -29,8 +30,15 @@ router.get('/projects', notAdminAuth, (req, res, next) => {
     size = 5;
   }
 
+  if (!name) {
+    name = '';
+  }
+
   const op = {
     company: req.user.company,
+    name: {
+      $regex: name,
+    },
   };
 
   if (!req.user.isManager) {
