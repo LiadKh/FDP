@@ -43,24 +43,16 @@ router.patch('/me', auth, async (req, res, next) => {
       return obj;
     }, {});
 
-  try {
-    await User.updateOne({
-      email: req.user.email,
-    }, {
-      $set: filtered,
-    }, (err, doc) => {
-      if (err) {
-        log(err);
-        throw new HttpErrorHandler(400, err);
-      } else if (!doc.ok && !doc.nModified) {
-        log(err);
-        throw new HttpErrorHandler(400, err);
-      } else res.send(doc);
-    });
-  } catch (error) {
-    log(error);
-    next(new HttpErrorHandler(400, error));
-  }
+  User.updateOne({
+    email: req.user.email,
+  }, {
+    $set: filtered,
+  }, (err, doc) => {
+    if (err || (!doc.ok && !doc.nModified)) {
+      log(err);
+      next(new HttpErrorHandler(400, err));
+    } else res.send(doc);
+  });
 });
 
 module.exports = router;

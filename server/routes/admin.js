@@ -16,11 +16,11 @@ const Company = require('../mongo/models/company');
 const User = require('../mongo/models/user');
 const modelsNames = require('../mongo/models/models.names');
 
-// router.use(auth);
-// router.use(adminAuth);
+router.use(auth);
+router.use(adminAuth);
 
 /** get all the admins that exists in the system. */
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   let {
     page,
     size,
@@ -46,11 +46,11 @@ router.get('/', (req, res, next) => {
 });
 
 /** create new admin. */
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const {
     admin,
   } = req.body;
-  if (!admin) throw new HttpErrorHandler(400, 'invalid admin data');
+  if (!admin) next(new HttpErrorHandler(400, 'invalid admin data'));
   else {
     admin.isAdmin = true;
     User.create(admin).then((user) => {
@@ -63,7 +63,7 @@ router.post('/', (req, res, next) => {
 });
 
 /** get companies - pagination -> page and size. */
-router.get('/company', (req, res, next) => {
+router.get('/company', async (req, res, next) => {
   let {
     page,
     size,

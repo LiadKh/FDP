@@ -57,7 +57,6 @@ mongoose.connection
   });
 
 require('./mongo/connection');
-require('./mongo/config');
 
 const allRouters = require('./routes');
 
