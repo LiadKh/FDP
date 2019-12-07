@@ -77,6 +77,7 @@ router.post('/project/:name', managerAuth, async (req, res, next) => {
 
   Project.create({
     name,
+    company: req.user.company,
   }, (err, project) => {
     if (err) {
       log(err);
