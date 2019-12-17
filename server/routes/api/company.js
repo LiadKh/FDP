@@ -3,15 +3,15 @@ const log = require('debug')('COMPANY');
 
 const {
   HttpErrorHandler,
-} = require('../lib/error');
+} = require('../../lib/error');
 const {
   auth,
   notAdminAuth,
-} = require('../middleware/auth');
+} = require('../../middleware/auth');
 
 const router = express.Router();
 
-const Project = require('../mongo/models/project');
+const Project = require('../../mongo/models/project');
 
 router.use(auth);
 

@@ -4,17 +4,17 @@ const Transaction = require('mongoose-transactions');
 
 const {
   HttpErrorHandler,
-} = require('../lib/error');
+} = require('../../lib/error');
 const {
   auth,
   adminAuth,
-} = require('../middleware/auth');
+} = require('../../middleware/auth');
 
 const router = express.Router();
 
-const Company = require('../mongo/models/company');
-const User = require('../mongo/models/user');
-const modelsNames = require('../mongo/models/models.names');
+const Company = require('../../mongo/models/company');
+const User = require('../../mongo/models/user');
+const modelsNames = require('../../mongo/models/models.names');
 
 router.use(auth);
 router.use(adminAuth);

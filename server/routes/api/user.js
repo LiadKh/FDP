@@ -3,13 +3,13 @@ const log = require('debug')('PROFILE');
 
 const {
   auth,
-} = require('../middleware/auth');
+} = require('../../middleware/auth');
 
 const router = express.Router();
-const User = require('../mongo/models/user');
+const User = require('../../mongo/models/user');
 const {
   HttpErrorHandler,
-} = require('../lib/error');
+} = require('../../lib/error');
 
 /** user profile */
 router.get('/me', auth, (req, res) => {
