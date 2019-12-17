@@ -1,12 +1,12 @@
 const log = require('debug')('AUTH');
 const express = require('express');
-const User = require('../mongo/models/user');
+const User = require('../../mongo/models/user');
 const {
   auth,
-} = require('../middleware/auth');
+} = require('../../middleware/auth');
 const {
   HttpErrorHandler,
-} = require('../lib/error');
+} = require('../../lib/error');
 
 const router = express.Router();
 

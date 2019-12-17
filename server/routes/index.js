@@ -1,11 +1,11 @@
 const express = require('express');
 
 const router = express.Router();
-const admin = require('./admin');
-const company = require('./company');
-const auth = require('./auth');
-const user = require('./user');
-const manager = require('./manager');
+const admin = require('./api/admin');
+const company = require('./api/company');
+const auth = require('./api/auth');
+const user = require('./api/user');
+const manager = require('./api/manager');
 
 
 router.use('/', auth);
