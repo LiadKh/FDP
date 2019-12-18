@@ -21,20 +21,20 @@ router.patch('/login', async (req, res, next) => {
       next(new HttpErrorHandler(400, 'missing email or password'));
     } else {
       const user = await User.findByCredentials(email, password);
-      if (!user) {
-        const err = 'Login failed! Check authentication credentials';
-        log(err);
-        next(new HttpErrorHandler(401, err));
-      } else {
-        const token = await user.generateAuthToken();
-        res.status(201).send({
-          user,
-          token,
-        });
-      }
+      // if (!user) {
+      //   const err = 'Login failed! Check authentication credentials';
+      //   log(err);
+      //   next(new HttpErrorHandler(401, err));
+      // } else {
+      const token = await user.generateAuthToken();
+      res.status(201).send({
+        user,
+        token,
+      });
     }
   } catch (error) {
-    next(new HttpErrorHandler(400, error));
+    log(error);
+    next(new HttpErrorHandler(401, error));
   }
 });
 
