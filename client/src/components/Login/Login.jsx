@@ -12,20 +12,19 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { login } from '../../redux/actions/auth';
 import './style.css';
 import { clearErrors } from '../../redux/actions/error';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getFromLocalStorage } from '../../utils/localStorage';
 
-const localStorageEmail = 'FDP-EMAIL';
-const localStoragePassword = 'FDP-PASSWORD';
+import { AuthContext } from '../Auth/Auth';
 
 class Login extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { email: '', password: '', rememberPassword: false };
+		this.state = { email: '', password: '', savePassword: false };
 	}
 
 	onChange = event => {
@@ -37,56 +36,36 @@ class Login extends Component {
 		});
 	};
 
-	sendLoginReq = e => {
-		e.preventDefault();
-
-		const { email, password } = this.state;
-
-		const user = {
-			email,
-			password
-		};
-
-		this.props.login(user);
-	};
-
 	componentDidMount() {
-		const email = localStorage.getItem(localStorageEmail);
-
-		if (email) {
-			const local = { email };
-			const password = localStorage.getItem(localStoragePassword);
-			if (password) local.password = password;
-			this.setState(local);
-		}
+		this.setState(getFromLocalStorage());
 	}
 
 	componentDidUpdate(prevProps) {
-		if (
-			this.props.isAuthenticated &&
-			this.props.isAuthenticated !== prevProps.isAuthenticated
-		) {
-			const { email, password } = this.state;
+		if (this.props.error) {
+			this.props.clearErrors();
 
-			localStorage.setItem(localStorageEmail, email);
-			if (this.state.rememberPassword) {
-				localStorage.setItem(localStoragePassword, password);
-			} else {
-				localStorage.removeItem(localStoragePassword);
-			}
-			this.props.history.replace('/home');
-		} else {
-			if (this.props.error) {
-				this.props.clearErrors();
-
-				toast.error("Can't login - Please check your email and password!", {
-					closeOnClick: true,
-					pauseOnFocusLoss: false
-				});
-			}
-			return true;
+			toast.error("Can't login - Please check your email and password!", {
+				closeOnClick: true,
+				pauseOnFocusLoss: false
+			});
 		}
+		return true;
 	}
+
+	SubmitLogin = e => {
+		e.preventDefault();
+		let { login } = this.context;
+
+		const { email, password, savePassword } = this.state;
+
+		const user = {
+			email,
+			password,
+			savePassword
+		};
+
+		login(user);
+	};
 
 	render() {
 		return (
@@ -99,7 +78,7 @@ class Login extends Component {
 									Sign In
 								</h2>
 								<h4 className="card-title text-center">Welcome Back!</h4>
-								<Form className="form-signin" onSubmit={this.sendLoginReq}>
+								<Form className="form-signin" onSubmit={this.SubmitLogin}>
 									<div className="form-label-group">
 										<input
 											name="email"
@@ -133,15 +112,15 @@ class Login extends Component {
 
 									<div className="custom-control custom-checkbox mb-3">
 										<input
-											name="rememberPassword"
+											name="savePassword"
 											type="checkbox"
 											className="custom-control-input"
-											id="rememberPassword"
+											id="savePassword"
 											onChange={this.onChange}
 										/>
 										<label
 											className="custom-control-label"
-											htmlFor="rememberPassword"
+											htmlFor="savePassword"
 										>
 											Remember password
 										</label>
@@ -192,13 +171,14 @@ class Login extends Component {
 	}
 }
 
+Login.contextType = AuthContext;
+
 const mapStateToProps = state => {
 	return {
 		isLoading: state.auth.isLoading,
-		isAuthenticated: state.auth.isAuthenticated,
 		error: state.error.error
 	};
 };
-const mapDispatchToProps = { login, clearErrors };
+const mapDispatchToProps = { clearErrors };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

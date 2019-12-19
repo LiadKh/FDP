@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const Profile = props => {
 	return <div>Profile</div>;
 };
 
-Profile.propTypes = {};
+// Profile.propTypes = {};
 
 export { Profile };
