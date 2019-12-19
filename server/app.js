@@ -96,7 +96,7 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use(allRouters);
+app.use('/api', allRouters);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

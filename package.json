@@ -13,7 +13,7 @@
     "install-client:darwin:linux": "npm i -C client",
     "install-client:win32": "cd client && npm i",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cross-env NODE_ENV=development DEBUG=* nodemon ./server/bin/www",
+    "server": "cross-env NODE_ENV=development DEBUG=* nodemon --ignore 'client/' ./server/bin/www",
     "client": "run-script-os",
     "client:win32": "cd client && npm start",
     "client:darwin:linux": "npm start --prefix client",
@@ -86,8 +86,7 @@
     "name": "Liad Khamdadash",
     "url": "https://github.com/LiadKh"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Liad Khamdadash",
       "url": "https://github.com/LiadKh"
     },
