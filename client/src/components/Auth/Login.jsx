@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getFromLocalStorage } from '../../utils/localStorage';
 
-import { AuthContext } from '../Auth/Auth';
+import { AuthContext } from './Auth';
 
 class Login extends Component {
 	constructor(props) {
@@ -181,4 +181,4 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = { clearErrors };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export const LoginPage = connect(mapStateToProps, mapDispatchToProps)(Login);

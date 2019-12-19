@@ -3,9 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../components/Auth/Auth';
 import Loading from '../pages/Loading/Loading';
 
+const text = 'Trying to login, please be patient';
+
 const PublicRoute = ({ component: Component, restricted, ...rest }) => {
 	const { isAuthenticated, isLoading } = useContext(AuthContext);
-	console.log(isAuthenticated && restricted);
 	return (
 		// restricted = false meaning public route
 		// restricted = true meaning restricted route
@@ -19,7 +20,7 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => {
 						<Component {...props} />
 					)
 				) : (
-					<Loading />
+					<Loading text={text} />
 				)
 			}
 		/>
@@ -42,7 +43,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 						<Redirect to="/login" />
 					)
 				) : (
-					<Loading />
+					<Loading text={text} />
 				)
 			}
 		/>

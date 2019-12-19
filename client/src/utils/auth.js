@@ -20,7 +20,8 @@ const checkIsAuthenticated = () => {
       token
     } = getFromLocalStorage();
 
-    if (token) {
+
+    if (token != null) {
       var config = {
         headers: {
           Authorization: `Bearer ${token}`
@@ -40,6 +41,7 @@ const checkIsAuthenticated = () => {
           removeTokenFromLocalStorage();
           reject();
         });
+
     } else reject();
   });
 };
@@ -53,33 +55,45 @@ const authLogin = ({
     store.dispatch({
       type: actions.USER_LOADING
     });
-    axios
-      .patch('api/login', {
-        email,
-        password
-      })
-      .then(res => {
-        loginSuccess({
-          token: res.data.token,
-          user: res.data.user,
-          password,
-          savePassword
-        });
-        resolve();
-      })
-      .catch(err => {
-        store.dispatch(returnErrors(err));
-        reject();
-      })
-      .finally(() =>
-        store.dispatch({
-          type: actions.USER_LOADING_FINISH
+
+    setTimeout(function () {
+      axios
+        .patch('api/login', {
+          email,
+          password
         })
-      );
+        .then(res => {
+          loginSuccess({
+            token: res.data.token,
+            user: res.data.user,
+            password,
+            savePassword
+          });
+          resolve();
+        })
+        .catch(err => {
+          store.dispatch(returnErrors(err));
+          reject();
+        })
+        .finally(() =>
+          store.dispatch({
+            type: actions.USER_LOADING_FINISH
+          })
+        );
+    }, 3000);
+
   });
 };
 
+const authLogout = () => {
+  removeTokenFromLocalStorage();
+  store.dispatch({
+    type: actions.USER_LOGOUT
+  })
+}
+
 export {
   checkIsAuthenticated,
-  authLogin
+  authLogin,
+  authLogout
 }

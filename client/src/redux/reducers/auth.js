@@ -1,7 +1,6 @@
 import actions from '../types/auth';
 
 const initialState = {
-  isAuthenticated: null,
   isLoading: false,
   user: null
 };
@@ -21,8 +20,7 @@ export default function (state = initialState, action) {
     case actions.LOGIN_SUCCESS:
       return {
         ...state,
-        isAuthenticated: true,
-          isLoading: false,
+        isLoading: false,
           user: payload
       };
     case actions.USER_LOADING_FINISH:
@@ -30,7 +28,12 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: false
       }
-      default:
-        return state;
+      case actions.USER_LOGOUT:
+        return {
+          ...state,
+          user: null
+        }
+        default:
+          return state;
   }
 }
