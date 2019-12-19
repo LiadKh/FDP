@@ -1,21 +1,15 @@
 import React from 'react';
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route
-	// Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Auth from '../components/Auth/Auth';
 
-import { PrivateRoute, PublicRoute } from '../utils/routers';
 import store from '../redux/store';
 
 import NotFound from '../pages/NotFound/NotFound';
+import { Auth, LoginPage, LogoutPage } from '../components/Auth';
+import { PrivateRoute, PublicRoute } from '../utils/routers';
 import { Home } from '../components/Home';
-import Login from '../components/Login/Login';
-// import { Admin } from '../components/Admin';
 import { Profile } from '../components/Profile';
+import { Dashboard } from '../components/Dashboard';
 
 import { toast } from 'react-toastify';
 
@@ -28,10 +22,14 @@ function App() {
 				<Router>
 					<Switch>
 						<PublicRoute exact restricted={false} path="/" component={Home} />
-						<PublicRoute restricted={true} path="/login" component={Login} />
-						<PrivateRoute path="/profile" children={Profile} exact />
-						{/*<Route path="/admin" children={Admin} />
-					<Route path="/company/:companyName" children={Home} /> */}
+						<PublicRoute
+							restricted={true}
+							path="/login"
+							component={LoginPage}
+						/>
+						<PrivateRoute path="/logout" component={LogoutPage} exact />
+						<PrivateRoute path="/profile" component={Profile} exact />
+						<PrivateRoute path="/dashboard" component={Dashboard} exact />
 						<Route path="*" component={NotFound} />
 					</Switch>
 				</Router>

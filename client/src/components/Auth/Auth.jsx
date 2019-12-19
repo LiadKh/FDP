@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { authLogin, checkIsAuthenticated } from '../../utils/auth';
+import { authLogin, checkIsAuthenticated, authLogout } from '../../utils/auth';
 
 export const AuthContext = React.createContext({});
 
-export default function Auth({ children }) {
+export function Auth({ children }) {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		checkAuth();
-	});
+	}, []);
 
 	const checkAuth = () =>
 		checkIsAuthenticated()
@@ -24,8 +24,8 @@ export default function Auth({ children }) {
 			.catch(error => setIsAuthenticated(false));
 
 	const logout = () => {
-		// authLogout();
 		setIsAuthenticated(false);
+		authLogout();
 	};
 
 	return (

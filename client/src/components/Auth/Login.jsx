@@ -1,4 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { toast } from 'react-toastify';
+
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
 	Container,
 	Row,
@@ -9,17 +18,11 @@ import {
 	ButtonToolbar,
 	Spinner
 } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
+
 import './style.css';
 import { clearErrors } from '../../redux/actions/error';
-
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { getFromLocalStorage } from '../../utils/localStorage';
-
-import { AuthContext } from '../Auth/Auth';
+import { AuthContext } from './Auth';
 
 class Login extends Component {
 	constructor(props) {
@@ -172,6 +175,10 @@ class Login extends Component {
 }
 
 Login.contextType = AuthContext;
+Login.propTypes = {
+	isLoading: PropTypes.bool.isRequired,
+	error: PropTypes.bool
+};
 
 const mapStateToProps = state => {
 	return {
@@ -181,4 +188,4 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = { clearErrors };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export const LoginPage = connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,7 +1,7 @@
 import React from 'react';
 import LoadingScreen from 'react-loading-screen';
 
-const Loading = () => {
+const Loading = props => {
 	return (
 		<LoadingScreen
 			loading={true}
@@ -9,7 +9,7 @@ const Loading = () => {
 			spinnerColor="#9ee5f8"
 			textColor="#676767"
 			// logoSrc="/logo.png"
-			text="Trying to login, please be patient"
+			text={props.text}
 		>
 			<></>
 		</LoadingScreen>
