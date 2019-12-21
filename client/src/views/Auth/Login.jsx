@@ -22,7 +22,7 @@ import {
 import './style.css';
 import { clearErrors } from '../../redux/actions/error';
 import { getFromLocalStorage } from '../../utils/localStorage';
-import { AuthContext } from './Auth';
+import { AuthContext } from '../../components/Auth/Auth';
 
 class Login extends Component {
 	constructor(props) {

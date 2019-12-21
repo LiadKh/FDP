@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from '../components/Auth/Auth';
-import Loading from '../pages/Loading/Loading';
+import Loading from '../components/Loading/Loading';
 
 const text = 'Trying to login, please be patient';
 

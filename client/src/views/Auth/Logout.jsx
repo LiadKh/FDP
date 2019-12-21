@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { AuthContext } from '../Auth';
-import Loading from '../../pages/Loading/Loading';
+import { AuthContext } from '../../components/Auth';
+import Loading from '../../components/Loading/Loading';
 
 class LogoutPage extends Component {
 	componentDidMount() {
