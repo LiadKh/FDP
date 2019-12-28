@@ -24,8 +24,10 @@ export function Auth({ children }) {
 			.catch(error => setIsAuthenticated(false));
 
 	const logout = () => {
-		setIsAuthenticated(false);
-		authLogout();
+		setTimeout(function() {
+			setIsAuthenticated(false);
+			authLogout();
+		}, 3000);
 	};
 
 	return (
