@@ -72,6 +72,12 @@
     "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LiadKh/FDP.git"
@@ -98,11 +104,5 @@
   "bugs": {
     "url": "https://github.com/LiadKh/FDP/issues"
   },
-  "homepage": "https://github.com/LiadKh/FDP#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "post-commit": "git update-index --again"
-    }
-  }
+  "homepage": "https://github.com/LiadKh/FDP#readme"
 }
