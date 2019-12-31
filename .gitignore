@@ -96,4 +96,6 @@ config/environment/*
 # intellij
 idea
 
-clienttest/
+# lock files
+package-lock.json
+yarn.lock
