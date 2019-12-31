@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './style.css';
 
-const NotFound = () => (
+const Errors = () => (
 	<>
 		<Helmet>
 			<title>404 Not Found</title>
@@ -28,4 +28,4 @@ const NotFound = () => (
 	</>
 );
 
-export default NotFound;
+export default Errors;

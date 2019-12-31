@@ -4,12 +4,17 @@ import { Provider } from 'react-redux';
 
 import store from '../redux/store';
 
-import NotFound from '../pages/NotFound/NotFound';
-import { Auth, LoginPage, LogoutPage } from '../components/Auth';
-import { PrivateRoute, PublicRoute } from '../utils/routers';
-import { Home } from '../components/Home';
-import { Profile } from '../components/Profile';
+import Errors from '../views/NotFound/Errors';
+import { Auth } from '../components/Auth';
 import { Dashboard } from '../components/Dashboard';
+
+import { Home } from '../views/Home';
+import { LoginPage, LogoutPage } from '../views/Auth';
+
+//TODO only for development
+import { Profile } from '../views/Profile';
+
+import { PrivateRoute, PublicRoute } from '../utils/routers';
 
 import { toast } from 'react-toastify';
 
@@ -21,16 +26,19 @@ function App() {
 			<Auth>
 				<Router>
 					<Switch>
-						<PublicRoute exact restricted={false} path="/" component={Home} />
+						<PublicRoute exact restricted={true} path="/" component={Home} />
 						<PublicRoute
 							restricted={true}
 							path="/login"
 							component={LoginPage}
 						/>
-						<PrivateRoute path="/logout" component={LogoutPage} exact />
+
+						{/* TODO only for development */}
 						<PrivateRoute path="/profile" component={Profile} exact />
+
+						<PrivateRoute path="/logout" component={LogoutPage} exact />
 						<PrivateRoute path="/dashboard" component={Dashboard} exact />
-						<Route path="*" component={NotFound} />
+						<Route path="*" component={Errors} />
 					</Switch>
 				</Router>
 			</Auth>
