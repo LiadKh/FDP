@@ -9,21 +9,17 @@
   },
   "scripts": {
     "postinstall": "npm run install-client",
-    "install-client": "run-script-os",
-    "install-client:darwin:linux": "npm i -C client",
-    "install-client:win32": "cd client && npm i",
+    "install-client": "yarn --cwd ./client/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cross-env NODE_ENV=development DEBUG=* nodemon --ignore 'client/' ./server/bin/www",
-    "client": "run-script-os",
-    "client:win32": "cd client && npm start",
-    "client:darwin:linux": "npm start --prefix client",
+    "client": "yarn --cwd ./client/ start",
     "db": "run-script-os",
-    "db:win32": "cd ./database/mongodb/scripts/windows&& setup.bat",
-    "db:darwin:linux": "cd ./database/mongodb/scripts/linux&& sh setup.sh",
+    "db:win32": "cd ./database/mongodb/scripts/windows&& startup.bat",
+    "db:darwin:linux": "cd ./database/mongodb/scripts/linux&& sh startup.sh",
     "flow": "flow",
     "flow-stop": "flow stop",
     "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server",
-    "start": "npm run build --prefix client&& cross-env NODE_ENV=production node ./server/bin/www",
+    "start": "yarn --cwd ./client/ build&& cross-env NODE_ENV=production node ./server/bin/www",
     "lint": "eslint --ignore-path ./.gitignore .",
     "lint-fix": "eslint --ignore-path ./.gitignore --fix ."
   },
@@ -92,7 +88,8 @@
     "name": "Liad Khamdadash",
     "url": "https://github.com/LiadKh"
   },
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Liad Khamdadash",
       "url": "https://github.com/LiadKh"
     },
