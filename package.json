@@ -14,8 +14,8 @@
     "server": "cross-env NODE_ENV=development DEBUG=* nodemon --ignore 'client/' ./server/bin/www",
     "client": "yarn --cwd ./client/ start",
     "db": "run-script-os",
-    "db:win32": "cd ./database/mongodb/scripts/windows&& startup.bat",
-    "db:darwin:linux": "cd ./database/mongodb/scripts/linux&& sh startup.sh",
+    "db:win32": "cd ./scripts/mongodb/windows&& startup.bat",
+    "db:darwin:linux": "cd ./scripts/mongodb/linux&& sh startup.sh",
     "flow": "flow",
     "flow-stop": "flow stop",
     "dev": "concurrently -c \"yellow.bold,magenta.bold,blue.bold\" -n \"DATABASE,CLIENT,SERVER\" npm:db npm:client npm:server",
@@ -88,8 +88,7 @@
     "name": "Liad Khamdadash",
     "url": "https://github.com/LiadKh"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Liad Khamdadash",
       "url": "https://github.com/LiadKh"
     },
