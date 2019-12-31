@@ -65,14 +65,13 @@ typings/
 
 ### create-react-app
 
-
 # dependencies
-/node_modules
-/.pnp
+client/node_modules
+client/.pnp
 .pnp.js
 
 # testing
-/coverage
+client/coverage
 
 # production
 client/build
@@ -96,3 +95,5 @@ config/environment/*
 
 # intellij
 idea
+
+clienttest/
