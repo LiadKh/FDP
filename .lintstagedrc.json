@@ -1,6 +1,5 @@
 {
-  "*.{md,html}": ["prettier --write", "git add"],
   "*.{js,jsx}": ["eslint --fix", "git add"],
-  "*.{rc, json}": ["jsonlint -i", "eslint --fix", "git add"],
+  "*.{rc,json}": ["jsonlint -i", "eslint --fix", "git add"],
   "*.{png,jpeg,jpg,gif,svg}": ["imagemin-lint-staged", "git add"]
 }

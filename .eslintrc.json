@@ -20,6 +20,7 @@
     "react-app",
     "plugin:jsx-a11y/recommended",
     "plugin:json/recommended",
+    "prettier",
     "plugin:prettier/recommended",
     "prettier/react"
   ],
