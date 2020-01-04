@@ -3,14 +3,19 @@ import React from 'react';
 var AuthStateContext = React.createContext();
 var AuthDispatchContext = React.createContext();
 
+const actions = {
+	LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+	SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
+	LOGIN_FAILURE: 'LOGIN_FAILURE'
+};
 function authReducer(state, action) {
 	switch (action.type) {
-		case 'LOGIN_SUCCESS':
+		case actions.LOGIN_SUCCESS:
 			return {
 				...state,
 				isAuthenticated: true
 			};
-		case 'SIGN_OUT_SUCCESS':
+		case actions.SIGN_OUT_SUCCESS:
 			return {
 				...state,
 				isAuthenticated: false
@@ -51,28 +56,28 @@ function useAuthDispatch() {
 	return context;
 }
 
-export { AuthProvider, useAuthState, useAuthDispatch, loginAuth, signOut };
+export { AuthProvider, useAuthState, useAuthDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginAuth(dispatch, login, password, history, setIsLoading, setError) {
+function loginUser(dispatch, email, password, history, setIsLoading, setError) {
 	setError(false);
 	setIsLoading(true);
 
-	if (!!login && !!password) {
+	if (!!email && !!password) {
 		setTimeout(() => {
 			localStorage.setItem('id_token', 1);
 			setError(null);
 			setIsLoading(false);
 			dispatch({
-				type: 'LOGIN_SUCCESS'
+				type: actions.LOGIN_SUCCESS
 			});
 
 			history.push('/app/dashboard');
 		}, 2000);
 	} else {
 		dispatch({
-			type: 'LOGIN_FAILURE'
+			type: actions.LOGIN_FAILURE
 		});
 		setError(true);
 		setIsLoading(false);
@@ -82,7 +87,7 @@ function loginAuth(dispatch, login, password, history, setIsLoading, setError) {
 function signOut(dispatch, history) {
 	localStorage.removeItem('id_token');
 	dispatch({
-		type: 'SIGN_OUT_SUCCESS'
+		type: actions.SIGN_OUT_SUCCESS
 	});
 	history.push('/login');
 }

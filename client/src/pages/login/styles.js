@@ -23,7 +23,7 @@ export default makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       width: "50%",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },

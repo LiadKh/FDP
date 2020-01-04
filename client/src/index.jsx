@@ -9,18 +9,18 @@ import Themes from './themes';
 import App from './components/app/App';
 import * as serviceWorker from './serviceWorker';
 import { LayoutProvider } from './context/LayoutContext';
-// import { AuthProvider } from './context/UserContext';
+import { AuthProvider } from './context/AuthContext';
 // import store from '../redux/store';
 
 ReactDOM.render(
 	// <Provider store={store}>
 	<LayoutProvider>
-		{/* <AuthProvider> */}
-		<ThemeProvider theme={Themes.default}>
-			<CssBaseline />
-			<App />
-		</ThemeProvider>
-		{/* </AuthProvider> */}
+		<AuthProvider>
+			<ThemeProvider theme={Themes.default}>
+				<CssBaseline />
+				<App />
+			</ThemeProvider>
+		</AuthProvider>
 	</LayoutProvider>,
 	// </Provider>
 	document.getElementById('root')
