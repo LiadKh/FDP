@@ -29,9 +29,9 @@ export const getFromLocalStorage = () => {
   if (!!email) {
     local.email = email
     const password = localStorage.getItem(localStoragePassword);
-    if (!!password) local.password = password;
+    local.password = !!password ? password : '';
     const token = localStorage.getItem(localStorageToken);
-    if (!!token) local.token = token;
+    local.token = !!token ? token : '';
   }
   return local;
 }
