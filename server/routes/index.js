@@ -7,7 +7,6 @@ const auth = require('./api/auth');
 const user = require('./api/user');
 const manager = require('./api/manager');
 
-
 router.use('/', auth);
 router.use('/admin', admin);
 router.use('/user', user);

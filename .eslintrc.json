@@ -38,6 +38,7 @@
   },
   "plugins": [
     "react",
+    "json",
     "@typescript-eslint",
     "import",
     "flowtype",
