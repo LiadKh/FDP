@@ -1,4 +1,6 @@
-import { makeStyles } from '@material-ui/styles';
+import {
+	makeStyles
+} from '@material-ui/styles';
 
 export default makeStyles(theme => ({
 	container: {
@@ -111,14 +113,15 @@ export default makeStyles(theme => ({
 		width: '100%',
 		marginTop: theme.spacing(2),
 		display: 'flex',
-		justifyContent: 'space-between',
+		// justifyContent: 'space-between',
+		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	forgetButton: {
 		textTransform: 'none',
-		fontWeight: 400
+		fontWeight: 400,
 	},
-	loginLoader: {
-		marginLeft: theme.spacing(4)
-	}
+	// loginLoader: {
+	// 	marginLeft: theme.spacing(4),
+	// }
 }));

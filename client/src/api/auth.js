@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const setAuthorizationHeaders = (token) => {
-// 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-// }
+const setAuthorizationHeaders = (token) => {
+	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 const checkAuthenticated = token => {
 	return new Promise((resolve, reject) => {
@@ -16,6 +16,10 @@ const checkAuthenticated = token => {
 			axios
 				.get('api/user/me', config)
 				.then(response => {
+					let {
+						token
+					} = response.data
+					setAuthorizationHeaders(token)
 					resolve(response.data);
 				})
 				.catch(error => {
@@ -25,7 +29,7 @@ const checkAuthenticated = token => {
 	});
 };
 
-const authLogin = ({
+const loginReq = ({
 	email,
 	password
 }) => {
@@ -36,6 +40,10 @@ const authLogin = ({
 				password
 			})
 			.then(res => {
+				let {
+					token
+				} = res.data
+				setAuthorizationHeaders(token)
 				resolve(res.data);
 			})
 			.catch(err => {
@@ -44,7 +52,7 @@ const authLogin = ({
 	});
 };
 
-const authLogout = () => {
+const logoutReq = () => {
 	return new Promise((resolve, reject) => {
 		axios
 			.patch('api/logout')
@@ -59,6 +67,6 @@ const authLogout = () => {
 
 export {
 	checkAuthenticated,
-	authLogin,
-	authLogout
+	loginReq,
+	logoutReq
 };

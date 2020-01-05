@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 const localStorageEmail = 'FDP-EMAIL';
 const localStorageToken = 'FDP-TOKEN';
 const localStoragePassword = 'FDP-PASSWORD';
@@ -20,6 +21,13 @@ export const saveToLocalStorage = ({
 		localStorage.removeItem(localStoragePassword);
 	}
 };
+
+saveToLocalStorage.PropTypes = {
+	email: PropTypes.string.isRequired,
+	token: PropTypes.string.isRequired,
+	password: PropTypes.string,
+	savePassword: PropTypes.bool
+}
 
 export const getFromLocalStorage = () => {
 	const email = localStorage.getItem(localStorageEmail);

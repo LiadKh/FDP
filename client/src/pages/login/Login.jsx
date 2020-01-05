@@ -32,17 +32,19 @@ function Login(props) {
 	var [nameValue, setNameValue] = useState('');
 	var [emailValue, setEmailValue] = useState('');
 	var [passwordValue, setPasswordValue] = useState('');
+	var [rememberPasswordValue, setRememberPasswordValue] = useState(false);
 
 	function handleLoginSubmit(event) {
 		event.preventDefault();
-		// loginUser(
-		// 	userDispatch,
-		// 	loginValue,
-		// 	passwordValue,
-		// 	props.history,
-		// 	setIsLoading,
-		// 	setError
-		// );
+		loginUser(
+			userDispatch,
+			emailValue,
+			passwordValue,
+			rememberPasswordValue,
+			props.history,
+			setIsLoading,
+			setError
+		);
 	}
 
 	// function handleRegisterSubmit(event) {
@@ -102,7 +104,7 @@ function Login(props) {
 								variant="outlined"
 							/>
 							<FormControlLabel
-								control={<Checkbox value="Remember password" color="primary" />}
+								control={<Checkbox value="Remember password" checked={rememberPasswordValue} color="primary" onClick={()=>setRememberPasswordValue(!rememberPasswordValue)}/>}
 								label="Remember password"
 							/>
 							<div className={classes.formButtons}>
