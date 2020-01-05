@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { PrivateRoute, PublicRoute } from '../../utils/routes';
+import { PrivateRoute, PublicRoute } from '../../utils/routers/routes';
 
 import Login from '../../pages/login';
 

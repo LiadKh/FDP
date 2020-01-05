@@ -7,7 +7,9 @@ import {
 	Tabs,
 	Tab,
 	TextField,
-	Fade
+	Fade,
+	Checkbox,
+	FormControlLabel
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
@@ -43,9 +45,9 @@ function Login(props) {
 		// );
 	}
 
-	function handleRegisterSubmit(event) {
-		event.preventDefault();
-	}
+	// function handleRegisterSubmit(event) {
+	// 	event.preventDefault();
+	// }
 
 	return (
 		<Grid container className={classes.container}>
@@ -64,86 +66,84 @@ function Login(props) {
 						centered
 					>
 						<Tab label="Login" classes={{ root: classes.tab }} />
-						<Tab label="New User" classes={{ root: classes.tab }} />
+						{/* <Tab label="New User" classes={{ root: classes.tab }} /> */}
 					</Tabs>
-					{activeTabId === 0 ? (
+					{/* {activeTabId === 0 ? ( 
 						// sign up form
-						<React.Fragment>
-							<Typography variant="h1" className={classes.greeting}>
-								Let's validate!
+						*/}
+					<React.Fragment>
+						<Typography variant="h1" className={classes.greeting}>
+							Let's validate!
+						</Typography>
+						<Fade in={error}>
+							<Typography color="error" className={classes.errorMessage}>
+								Something is wrong with your email or password :(
 							</Typography>
-							<Fade in={error}>
-								<Typography color="error" className={classes.errorMessage}>
-									Something is wrong with your email or password :(
-								</Typography>
-							</Fade>
-							<form onSubmit={handleLoginSubmit}>
-								<TextField
-									id="email"
-									value={emailValue}
-									onChange={e => setEmailValue(e.target.value)}
-									margin="normal"
-									label="Email Address"
-									type="email"
-									fullWidth
-									variant="outlined"
-								/>
-								<TextField
-									id="password"
-									value={passwordValue}
-									onChange={e => setPasswordValue(e.target.value)}
-									margin="normal"
-									label="Password"
-									type="password"
-									fullWidth
-									variant="outlined"
-								/>
-								<div className={classes.formButtons}>
-									{isLoading ? (
-										<CircularProgress
-											size={26}
-											className={classes.loginLoader}
-										/>
-									) : (
-										<Button
-											type="submit"
-											disabled={
-												emailValue.length === 0 || passwordValue.length === 0
-											}
-											variant="contained"
-											color="primary"
-											size="large"
-										>
-											Login
-										</Button>
-									)}
+						</Fade>
+						<form onSubmit={handleLoginSubmit}>
+							<TextField
+								id="email"
+								value={emailValue}
+								onChange={e => setEmailValue(e.target.value)}
+								margin="normal"
+								label="Email Address"
+								type="email"
+								fullWidth
+								variant="outlined"
+							/>
+							<TextField
+								id="password"
+								value={passwordValue}
+								onChange={e => setPasswordValue(e.target.value)}
+								margin="normal"
+								label="Password"
+								type="password"
+								fullWidth
+								variant="outlined"
+							/>
+							<FormControlLabel
+								control={<Checkbox value="Remember password" color="primary" />}
+								label="Remember password"
+							/>
+							<div className={classes.formButtons}>
+								{isLoading ? (
+									<CircularProgress size={26} className={classes.loginLoader} />
+								) : (
 									<Button
+										type="submit"
+										disabled={
+											emailValue.length === 0 || passwordValue.length === 0
+										}
+										variant="contained"
+										color="primary"
+										size="large"
+										fullWidth
+									>
+										Login
+									</Button>
+								)}
+								{/* <Button
 										color="primary"
 										size="large"
 										className={classes.forgetButton}
 									>
 										Forget Password
-									</Button>
-								</div>
-							</form>
-						</React.Fragment>
-					) : (
-						// register form
-						<React.Fragment>
-							<Typography variant="h1" className={classes.greeting}>
-								Welcome!
-							</Typography>
-							<Typography variant="h5" className={classes.subGreeting}>
-								Enter your contact information
-							</Typography>
-							<Fade in={error}>
-								<Typography color="error" className={classes.errorMessage}>
-									invalid email
-								</Typography>
-							</Fade>
+									</Button> */}
+							</div>
+						</form>
+					</React.Fragment>
+					{/* // ) : (
+					 	// register form
+					 	<React.Fragment>
+					 		<Typography variant="h1" className={classes.greeting}>
+					 			Welcome!
+					 		</Typography>
+					 		<Typography variant="h5" className={classes.subGreeting}>
+					 			Enter your contact information
+					 		</Typography>
 							<form onSubmit={handleRegisterSubmit}>
-								<TextField
-									id="name"
+					 			<TextField 
+									 id="name"
 									value={nameValue}
 									onChange={e => setNameValue(e.target.value)}
 									margin="normal"
@@ -193,7 +193,7 @@ function Login(props) {
 								</div>
 							</form>
 						</React.Fragment>
-					)}
+					)} */}
 				</div>
 			</div>
 		</Grid>
