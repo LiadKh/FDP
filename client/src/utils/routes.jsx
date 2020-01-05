@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 // const text = 'Trying to login, please be patient';
 
-const PublicRoute = ({ component, restricted = false, ...rest }) => {
+const PublicRoute = ({ component: Component, restricted = false, ...rest }) => {
 	// const { isAuthenticated, isLoading } = useContext(AuthContext);
 	return (
 		// restricted = false meaning public route
@@ -17,12 +17,13 @@ const PublicRoute = ({ component, restricted = false, ...rest }) => {
 		<Route
 			{...rest}
 			render={
-				props =>
+				props => (
 					// !isLoading ? (
 					// 	isAuthenticated && restricted ? (
 					// 		<Redirect to="/dashboard" />
 					// 	) : (
-					React.createElement(component, props)
+					<Component {...props} />
+				)
 				// 	)
 				// ) : (
 				// 	<LoadingPage text={text} />
@@ -32,7 +33,7 @@ const PublicRoute = ({ component, restricted = false, ...rest }) => {
 	);
 };
 
-const PrivateRoute = ({ component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
 	// const { isAuthenticated, isLoading } = useContext(AuthContext);
 
 	return (
@@ -41,10 +42,11 @@ const PrivateRoute = ({ component, ...rest }) => {
 		<Route
 			{...rest}
 			render={
-				props =>
+				props => (
 					// !isLoading ? (
 					// 	isAuthenticated ? (
-					React.createElement(component, props)
+					<Component {...props} />
+				)
 				// ) : (
 				// 	<Redirect
 				// 		to={{

@@ -100,7 +100,7 @@ userSchema.methods.generateAuthToken = async function() {
 
 userSchema.statics.findByCredentials = async (email, password) => {
 	// Search for a user by email and password.
-	const user = await User.findOne({
+	const user = await this.findOne({
 		email
 	});
 	if (!user) {
@@ -118,7 +118,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 };
 
 userSchema.statics.deleteUser = async (companyId, userId) => {
-	User.deleteOne(
+	this.deleteOne(
 		{
 			company: companyId,
 			_id: userId

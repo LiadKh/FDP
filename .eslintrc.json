@@ -1,60 +1,43 @@
 {
   "root": true,
   "env": {
-    "browser": true,
     "commonjs": true,
-    "es6": true,
-    "node": true,
+    "es2020": true,
     "mongo": true,
-    "shared-node-browser": true,
-    "es2020": true
+    "shared-node-browser": true
   },
   "extends": [
     "airbnb",
+    "airbnb/hooks",
     "plugin:node/recommended",
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:react/recommended",
-    "plugin:flowtype/recommended",
-    "react-app",
     "plugin:jsx-a11y/recommended",
     "plugin:json/recommended",
-    "prettier",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard"
   ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
-  "parser": "babel-eslint",
   "parserOptions": {
+    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "ecmaVersion": 2020,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "json",
-    "@typescript-eslint",
-    "import",
-    "flowtype",
-    "react-hooks",
-    "jsx-a11y",
-    "prettier"
-  ],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
-      }
     }
   },
-  "rules": {}
+  "parser": "babel-eslint",
+  "plugins": [
+    "prettier",
+    "flowtype"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "off",
+      {},
+      {
+        "usePrettierrc": true
+      }
+    ]
+  }
 }

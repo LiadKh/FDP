@@ -23,7 +23,7 @@ const companySchema = new Schema(
 );
 
 companySchema.statics.deleteCompany = async companyId => {
-	Company.deleteOne(
+	this.deleteOne(
 		{
 			_id: companyId
 		},
