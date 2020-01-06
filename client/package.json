@@ -39,14 +39,9 @@
     "prop-types": "^15.7.2"
   },
   "eslintConfig": {
-    "env": {
-      "browser": true
-    },
     "extends": [
       "react-app"
-    ],
-    "plugins": [],
-    "rules": {}
+    ]
   },
   "browserslist": {
     "production": [

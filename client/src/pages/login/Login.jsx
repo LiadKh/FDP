@@ -9,7 +9,7 @@ import {
 	TextField,
 	Fade,
 	Checkbox,
-	FormControlLabel
+	FormControlLabel,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
@@ -45,7 +45,7 @@ function Login(props) {
 			rememberPasswordValue,
 			props.history,
 			setIsLoading,
-			setError
+			setError,
 		);
 	}
 
@@ -92,6 +92,7 @@ function Login(props) {
 						</Fade>
 						<form onSubmit={handleLoginSubmit}>
 							<TextField
+								disabled={isLoading}
 								id="email"
 								value={emailValue}
 								onChange={e => setEmailValue(e.target.value)}
@@ -102,6 +103,7 @@ function Login(props) {
 								variant="outlined"
 							/>
 							<TextField
+								disabled={isLoading}
 								id="password"
 								value={passwordValue}
 								onChange={e => setPasswordValue(e.target.value)}
@@ -114,11 +116,13 @@ function Login(props) {
 							<FormControlLabel
 								control={
 									<Checkbox
+										disabled={isLoading}
 										value="Remember password"
 										checked={rememberPasswordValue}
 										color="primary"
 										onClick={() =>
-											setRememberPasswordValue(!rememberPasswordValue)}
+											setRememberPasswordValue(!rememberPasswordValue)
+										}
 									/>
 								}
 								label="Remember password"
