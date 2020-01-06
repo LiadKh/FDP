@@ -5,17 +5,19 @@ import PropTypes from 'prop-types';
 const Loading = props => {
 	return (
 		<LoadingScreen
-		loading
+			loading
 			bgColor="#f1f1f1"
 			spinnerColor="#9ee5f8"
 			textColor="#676767"
 			text={props.text}
-		/>
+		>
+			<></>
+		</LoadingScreen>
 	);
 };
 
-Loading.propTypes={
-	text:PropTypes.string
-}
+Loading.propTypes = {
+	text: PropTypes.string,
+};
 
 export default Loading;

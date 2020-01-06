@@ -6,7 +6,6 @@ import { useAuthState } from '../../context/AuthContext';
 
 const PublicRoute = ({ component: Component, restricted = false, ...rest }) => {
 	const { isAuthenticated } = useAuthState();
-	console.log(isAuthenticated)
 	return (
 		// restricted = false meaning public route
 		// restricted = true meaning restricted route
@@ -17,7 +16,8 @@ const PublicRoute = ({ component: Component, restricted = false, ...rest }) => {
 					<Redirect to="/dashboard" />
 				) : (
 					<Component {...props} />
-				)}
+				)
+			}
 		/>
 	);
 };
@@ -40,22 +40,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 						to={{
 							pathname: '/login',
 							state: {
-								from: props.location
-							}
+								from: props.location,
+							},
 						}}
 					/>
-				)}
+				)
+			}
 		/>
 	);
 };
 
-PublicRoute.prototype = {
-	component: PropTypes.element.isRequired,
-	restricted: PropTypes.bool
+PublicRoute.propTypes = {
+	component: PropTypes.elementType.isRequired,
+	restricted: PropTypes.bool,
 };
 
-PrivateRoute.prototype = {
-	component: PropTypes.element.isRequired
+PrivateRoute.propTypes = {
+	component: PropTypes.elementType.isRequired,
 };
 
 export { PublicRoute, PrivateRoute };

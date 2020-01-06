@@ -1,6 +1,13 @@
 import axios from 'axios';
+import store from '../redux/store'
+import {
+	setUser,
+	removeUser
+} from '../redux/actions/user'
+import User from '../utils/classes/user'
 
 const setAuthorizationHeaders = token => {
+	console.log('aaaaaaaaaaa', token)
 	axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -16,10 +23,9 @@ const checkAuthenticated = token => {
 			axios
 				.get('api/user/me', config)
 				.then(response => {
-					const {
-						token
-					} = response.data;
+					console.log(token)
 					setAuthorizationHeaders(token);
+					store.dispatch(setUser(User.fromJson(response.data)))
 					resolve(response.data);
 				})
 				.catch(error => {
@@ -41,9 +47,11 @@ const loginReq = ({
 			})
 			.then(res => {
 				const {
-					token
+					token,
 				} = res.data;
+				console.log('bbbbbbbbb', res.data)
 				setAuthorizationHeaders(token);
+				store.dispatch(setUser(User.fromJson(res.data)))
 				resolve(res.data);
 			})
 			.catch(err => {
@@ -57,6 +65,7 @@ const logoutReq = () => {
 		axios
 			.patch('api/logout')
 			.then(res => {
+				store.dispatch(removeUser())
 				resolve(res.data);
 			})
 			.catch(err => {
