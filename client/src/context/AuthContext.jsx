@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { loginReq } from '../api/auth';
-import { saveToLocalStorage } from '../utils/storage/localStorage';
+import { loginReq,logoutReq,checkAuthenticated } from '../api/auth';
+import { saveToLocalStorage,removeTokenFromLocalStorage,getFromLocalStorage } from '../utils/storage/localStorage';
 
-var AuthStateContext = React.createContext();
-var AuthDispatchContext = React.createContext();
+const AuthStateContext = React.createContext();
+const AuthDispatchContext = React.createContext();
 
 const actions = {
 	LOGIN_SUCCESS: 'LOGIN_SUCCESS',
@@ -31,19 +31,18 @@ function authReducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-	var [state, dispatch] = React.useReducer(authReducer, {
+	const [state, dispatch] = React.useReducer(authReducer, {
 		isAuthenticated: false
 	});
 
-	// React.useEffect(() => {
-	// 	checkAuth();
-	// }, []);
-
-	// const checkAuth = () =>
-	// 	checkIsAuthenticated()
-	// 		.then(() => setIsAuthenticated(true))
-	// 		.catch(() => setIsAuthenticated(false))
-	// 		.then(() => setIsLoading(false));
+	React.useEffect(() => {
+		const {token} = getFromLocalStorage()
+		checkAuthenticated(token).then((res)=>{
+			dispatch({
+				type: actions.LOGIN_SUCCESS
+			});
+		})
+	}, []);
 
 	return (
 		<AuthStateContext.Provider value={state}>
@@ -59,7 +58,7 @@ AuthProvider.propTypes = {
 };
 
 function useAuthState() {
-	var context = React.useContext(AuthStateContext);
+	const context = React.useContext(AuthStateContext);
 	if (context === undefined) {
 		throw new Error('useAuthState must be used within a AuthProvider');
 	}
@@ -67,7 +66,7 @@ function useAuthState() {
 }
 
 function useAuthDispatch() {
-	var context = React.useContext(AuthDispatchContext);
+	const context = React.useContext(AuthDispatchContext);
 	if (context === undefined) {
 		throw new Error('useAuthDispatch must be used within a AuthProvider');
 	}
@@ -93,7 +92,7 @@ async function loginUser(
 	setTimeout(() => {
 		loginReq({ email, password })
 			.then(res => {
-				let { token } = res;
+				const { token } = res;
 				saveToLocalStorage({
 					email,
 					token,
@@ -119,9 +118,11 @@ async function loginUser(
 }
 
 function signOut(dispatch, history) {
-	localStorage.removeItem('id_token');
-	dispatch({
-		type: actions.SIGN_OUT_SUCCESS
-	});
-	history.push('/login');
+	logoutReq().then(()=>{
+		removeTokenFromLocalStorage();
+		dispatch({
+			type: actions.SIGN_OUT_SUCCESS
+		});
+		history.push('/login');
+	})
 }

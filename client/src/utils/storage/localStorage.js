@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 const localStorageEmail = 'FDP-EMAIL';
 const localStorageToken = 'FDP-TOKEN';
 const localStoragePassword = 'FDP-PASSWORD';
@@ -9,10 +8,10 @@ export const saveToLocalStorage = ({
 	password,
 	savePassword = false
 }) => {
-	if (!!email) {
+	if (email) {
 		localStorage.setItem(localStorageEmail, email);
 	}
-	if (!!token) {
+	if (token) {
 		localStorage.setItem(localStorageToken, token);
 	}
 	if (savePassword) {
@@ -22,23 +21,16 @@ export const saveToLocalStorage = ({
 	}
 };
 
-saveToLocalStorage.PropTypes = {
-	email: PropTypes.string.isRequired,
-	token: PropTypes.string.isRequired,
-	password: PropTypes.string,
-	savePassword: PropTypes.bool
-}
-
 export const getFromLocalStorage = () => {
 	const email = localStorage.getItem(localStorageEmail);
 
 	const local = {};
-	if (!!email) {
+	if (email) {
 		local.email = email;
 		const password = localStorage.getItem(localStoragePassword);
-		local.password = !!password ? password : '';
+		local.password = password || '';
 		const token = localStorage.getItem(localStorageToken);
-		local.token = !!token ? token : '';
+		local.token = token || '';
 	}
 	return local;
 };

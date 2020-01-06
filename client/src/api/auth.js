@@ -1,25 +1,25 @@
 import axios from 'axios';
 
-const setAuthorizationHeaders = (token) => {
-	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
+const setAuthorizationHeaders = token => {
+	axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
 
 const checkAuthenticated = token => {
 	return new Promise((resolve, reject) => {
-		if (!!token) {
-			var config = {
+		if (token) {
+			const config = {
 				headers: {
-					Authorization: `Bearer ${token}`
-				}
+					Authorization: `Bearer ${token}`,
+				},
 			};
 
 			axios
 				.get('api/user/me', config)
 				.then(response => {
-					let {
+					const {
 						token
-					} = response.data
-					setAuthorizationHeaders(token)
+					} = response.data;
+					setAuthorizationHeaders(token);
 					resolve(response.data);
 				})
 				.catch(error => {
@@ -37,13 +37,13 @@ const loginReq = ({
 		axios
 			.patch('api/login', {
 				email,
-				password
+				password,
 			})
 			.then(res => {
-				let {
+				const {
 					token
-				} = res.data
-				setAuthorizationHeaders(token)
+				} = res.data;
+				setAuthorizationHeaders(token);
 				resolve(res.data);
 			})
 			.catch(err => {

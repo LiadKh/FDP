@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Grid,
 	CircularProgress,
@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
+import { getFromLocalStorage } from '../../utils/storage/localStorage';
+
 // styles
 import useStyles from './styles';
 
@@ -20,19 +22,19 @@ import useStyles from './styles';
 import { useAuthDispatch, loginUser } from '../../context/AuthContext';
 
 function Login(props) {
-	var classes = useStyles();
+	const classes = useStyles();
 
 	// global
-	var userDispatch = useAuthDispatch();
+	const userDispatch = useAuthDispatch();
 
 	// local
-	var [isLoading, setIsLoading] = useState(false);
-	var [error, setError] = useState(null);
-	var [activeTabId, setActiveTabId] = useState(0);
-	var [nameValue, setNameValue] = useState('');
-	var [emailValue, setEmailValue] = useState('');
-	var [passwordValue, setPasswordValue] = useState('');
-	var [rememberPasswordValue, setRememberPasswordValue] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [activeTabId, setActiveTabId] = useState(0);
+	// var [nameValue, setNameValue] = useState('');
+	const [emailValue, setEmailValue] = useState('');
+	const [passwordValue, setPasswordValue] = useState('');
+	const [rememberPasswordValue, setRememberPasswordValue] = useState(false);
 
 	function handleLoginSubmit(event) {
 		event.preventDefault();
@@ -46,6 +48,12 @@ function Login(props) {
 			setError
 		);
 	}
+
+	useEffect(() => {
+		const { email, password } = getFromLocalStorage();
+		if (email) setEmailValue(email);
+		if (password) setPasswordValue(password);
+	}, []);
 
 	// function handleRegisterSubmit(event) {
 	// 	event.preventDefault();
@@ -73,7 +81,7 @@ function Login(props) {
 					{/* {activeTabId === 0 ? ( 
 						// sign up form
 						*/}
-					<React.Fragment>
+					<>
 						<Typography variant="h1" className={classes.greeting}>
 							Let's validate!
 						</Typography>
@@ -104,7 +112,15 @@ function Login(props) {
 								variant="outlined"
 							/>
 							<FormControlLabel
-								control={<Checkbox value="Remember password" checked={rememberPasswordValue} color="primary" onClick={()=>setRememberPasswordValue(!rememberPasswordValue)}/>}
+								control={
+									<Checkbox
+										value="Remember password"
+										checked={rememberPasswordValue}
+										color="primary"
+										onClick={() =>
+											setRememberPasswordValue(!rememberPasswordValue)}
+									/>
+								}
 								label="Remember password"
 							/>
 							<div className={classes.formButtons}>
@@ -133,7 +149,7 @@ function Login(props) {
 									</Button> */}
 							</div>
 						</form>
-					</React.Fragment>
+					</>
 					{/* // ) : (
 					 	// register form
 					 	<React.Fragment>

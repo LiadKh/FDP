@@ -2,7 +2,6 @@
   "root": true,
   "env": {
     "commonjs": true,
-    "es2020": true,
     "mongo": true,
     "shared-node-browser": true
   },
@@ -17,7 +16,6 @@
     "plugin:json/recommended",
     "plugin:prettier/recommended",
     "prettier/flowtype",
-    "prettier/react",
     "prettier/standard"
   ],
   "parserOptions": {
@@ -28,8 +26,7 @@
   },
   "parser": "babel-eslint",
   "plugins": [
-    "prettier",
-    "flowtype"
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": [
