@@ -4,27 +4,25 @@ const modelName = require('./models.names').company;
 const User = require('./user');
 const Project = require('./project');
 
-const { Schema } = mongoose;
+const {
+	Schema
+} = mongoose;
 
-const companySchema = new Schema(
-	{
-		name: {
-			type: String,
-			unique: true,
-			required: [true, "company name can't be blank"],
-			index: true,
-			trim: true,
-			minlength: 3
-		}
-	},
-	{
-		timestamps: true
+const companySchema = new Schema({
+	name: {
+		type: String,
+		unique: true,
+		required: [true, "company name can't be blank"],
+		index: true,
+		trim: true,
+		minlength: 3
 	}
-);
+}, {
+	timestamps: true
+});
 
-companySchema.statics.deleteCompany = async companyId => {
-	Company.deleteOne(
-		{
+companySchema.statics.deleteCompany = async function (companyId) {
+	this.deleteOne({
 			_id: companyId
 		},
 		err => {
@@ -33,8 +31,7 @@ companySchema.statics.deleteCompany = async companyId => {
 					massage: err
 				});
 			} else {
-				User.deleteMany(
-					{
+				User.deleteMany({
 						company: companyId
 					},
 					err1 => {
@@ -43,8 +40,7 @@ companySchema.statics.deleteCompany = async companyId => {
 								massage: err1
 							});
 						} else {
-							Project.deleteMany(
-								{
+							Project.deleteMany({
 									company: companyId
 								},
 								err2 => {
