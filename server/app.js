@@ -28,7 +28,9 @@ const mkdirp = require('mkdirp');
 const mongoose = require('mongoose');
 const events = require('events');
 
-const { handleError } = require('./lib/error');
+const {
+	handleError
+} = require('./lib/error');
 
 const dbEventEmitter = new events.EventEmitter();
 dbEventEmitter.on('connection', () => {
@@ -65,8 +67,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(
 		logger('common', {
 			stream: fs.createWriteStream(
-				path.resolve(process.cwd(), 'logs/access.log'),
-				{
+				path.resolve(process.cwd(), 'logs/access.log'), {
 					flags: 'a'
 				}
 			)
@@ -112,7 +113,7 @@ if (process.env.NODE_ENV === 'production') {
 	routeList.default.terminal(app);
 }
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
 	handleError(err, res);
 });
 
