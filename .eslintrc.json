@@ -7,7 +7,6 @@
   },
   "extends": [
     "airbnb",
-    "airbnb/hooks",
     "plugin:node/recommended",
     "eslint:recommended",
     "plugin:import/errors",
@@ -29,6 +28,9 @@
     "prettier"
   ],
   "rules": {
+    "func-names": [
+      "off"
+    ],
     "prettier/prettier": [
       "off",
       {},

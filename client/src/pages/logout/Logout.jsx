@@ -10,7 +10,7 @@ function Logout(props) {
 
 	React.useEffect(() => {
 		signOut(userDispatch, props.history);
-	}, []);
+	}, [props, userDispatch]);
 
 	return <Loading text={textLogout} />;
 }
