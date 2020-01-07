@@ -55,7 +55,7 @@
 		"eslint-plugin-react-hooks": "^2.3.0",
 		"express-routes-catalogue": "^1.0.2",
 		"flow-bin": "^0.112.0",
-		"husky": "^3.1.0",
+		"husky": "^4.0.0",
 		"jsonlint": "^1.6.3",
 		"lint-staged": "^9.4.3",
 		"nodemon": "^1.19.4",
