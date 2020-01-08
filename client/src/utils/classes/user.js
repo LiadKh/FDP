@@ -1,5 +1,8 @@
 var User = function (name, email, isAdmin, isManager, _id) {
-	this.name = name;
+	this.name = {
+		first: name.first,
+		last: name.last
+	};
 	this.email = email;
 	this.isAdmin = isAdmin;
 	this.isManager = isManager;

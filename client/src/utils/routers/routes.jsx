@@ -13,7 +13,7 @@ const PublicRoute = ({ component: Component, restricted = false, ...rest }) => {
 			{...rest}
 			render={props =>
 				isAuthenticated && restricted ? (
-					<Redirect to="/dashboard" />
+					<Redirect to="/app/dashboard" />
 				) : (
 					<Component {...props} />
 				)

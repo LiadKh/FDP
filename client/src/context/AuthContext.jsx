@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import store from '../redux/store'
+import {
+	removeUser
+} from '../redux/actions/user'
+
 import { loginReq,logoutReq,checkAuthenticated } from '../api/auth';
 import { saveToLocalStorage,removeTokenFromLocalStorage,getFromLocalStorage } from '../utils/storage/localStorage';
 
@@ -41,7 +46,7 @@ function AuthProvider({ children }) {
 			dispatch({
 				type: actions.LOGIN_SUCCESS
 			});
-		})
+		}).catch(err=>{})
 	}, []);
 
 	return (
@@ -118,11 +123,12 @@ async function loginUser(
 }
 
 function signOut(dispatch, history) {
-	logoutReq().then(()=>{
+	logoutReq().then((res)=>{
 		removeTokenFromLocalStorage();
 		dispatch({
 			type: actions.SIGN_OUT_SUCCESS
 		});
+		store.dispatch(removeUser())
 		history.push('/login');
 	})
 }
